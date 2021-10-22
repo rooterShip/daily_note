@@ -37,3 +37,45 @@ ArrayList就是动态数组，动态的增加和减少元素，可灵活的设�
   - HashSet:使用被插入对象的Hash码(效率最高)，**无序**，非同步，底层通过散列函数来进行元素的存储
   - LinkedHashSet:继承于HashSet、又基于LinkedHashMap来实现，遍历性能比HashSet好，在散列函数的基础上添加了链表支持。
   - TreeSet:二叉树结构，保证元素按照元素的自然顺序进行升序排序，添加操作速率比散列集慢，访问和遍历的时间很快。  
+  - HashSet<br>
+    - 构造方法<br>
+      Set name = new HashSet();
+    - 其他方法<br>
+      –add(E e)：如果此 set 中尚未包含指定元素，则添加指定元素<br>
+      –clear()：从此 set 中移除所有元素<br>
+      –remove(Object o)：如果指定元素存在于此 set 中，则将其移除<br>
+      –size()：返回此 set 中的元素的数量（set 的容量）<br>
+      –isEmpty()：如果此 set 不包含任何元素，则返回 true<br>
+      –contains(E e)：判断是否包含元素<br>
+  - TreeSet
+    - 构造方法
+      –TreeSet name=new TreeSet();<br>
+      –import java.util.TreeSet;<br>
+      –import java.util.Set;<br>
+    - 其他方法
+      –add()：将指定的元素添加到此 set(如果该元素尚未存在 set 中)<br>
+      –remove(Object o)：将指定的元素从 set 中移除（如果该元素存在于此 set 中）<br>
+      –first()：返回此 set 中当前第一个（最低）元素<br>
+      –last()：返回此 set 中当前最后一个（最高）元素<br>
+      –isEmpty()：如果此 set 不包含任何元素，则返回 true<br>
+      –size()：返回 set 中的元素数（set 的容量）<br>
+### 集合和数组之间的转换问题
+```java
+//把集合转换为数组
+Object[] objs = set.toArray();
+//把数组转换成集合
+List<Object> list = Arrays.asList(objs);
+```
+***
+### Queue接口
+>队列是一种特殊的线性表，只允许在表的前端(front,队头)进行删除操作，而在表的后端(rear,队尾)进行删除操作<br>
+>LinkedList实现了Queue接口
+- 方法<br>
+   - add(E e): 增加一个元素。成功时返回true，如果队列已满，则抛出一个IIIegaISlabEepeplian异常<br>
+   - remove(): 移除并返回队列头部的元素。如果队列为空，则抛出一个NoSuchElementException异常<br>
+   - Element(): 返回队列头部的元素。如果队列为空，则抛出一个NoSuchElementException异常<br>
+   - offer(E e): 添加一个元素并返回true。如果队列已满，返回false
+   - poll(): 移除并返问队列头部的元素。如果队列为空，则返回null<br>
+   - peek(): 返回队列头部的元素。如果队列为空，则返回null<br>
+   - put(E e): 添加一个元素。如果队列满，则阻塞<br>
+   - take(): 移除并返回队列头部的元素。如果队列空，则阻塞<br>
