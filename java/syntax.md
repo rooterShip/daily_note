@@ -83,3 +83,62 @@ List<Object> list = Arrays.asList(objs);
 # 泛型
 ## 泛型是把类型明确的工作推迟到创建对象或调用方法的时候才去明确的特殊类型，实现了参数化类型，使代码可以应用于多种类型
 ***
+### 泛型类
+- 用法举例<br>
+  ```java
+  class ObjectExample<T>{   //也可以带有两个类型参数  class ObjectExample<T1, T2>
+    private T a;
+
+    public T getA(){
+
+      return a;
+    }
+    public setA(T a){
+
+      this.obj = a;
+    }
+  }
+
+  public class Test{
+    public static void main(String[] args){
+
+      //现在可以简写成ObjectExample<Integer> a = new ObjectExample<>()
+      ObjectExample<Integer> a = new ObjectExample<Integer>();
+      a.setA(23);
+      System.out.println(a.getA());
+    }
+  }
+  ```
+- 容器和泛型关于<>的区别：对于容器而言，<>里放的是容器所装的对象类型，对于泛型来说，<>里放的是类型参数实例化的具体类型，其形式都表现为--xxx <对象类型> mm = new xxx<>();
+### 泛型方法
+- 用法举例(只需将泛型参数列表置于方法返回值之前即可)
+  ```java
+  public class GenericMethods{    //普通类
+
+    public <T> void f(T x){   //泛型方法
+
+      System.out.println(x.getClass().getName());
+    }
+    public static void main(String[] args){
+      GenericMethods gm = new GenericMethods();
+      gm.<Boolean>f(true);
+      gm.<String>f("use generic");
+      gm.<Integer>f(3);
+    }
+  }
+  ```
+### 受限泛型
+> defination:在定义泛型类型时，若没有指定其参数类型继承的类（接口），就默认继承自Objct类，因此在任何类型都可以作为参数传入来实例化该泛型。但如果想要限制使用此泛型的类别，可以在定义参数类型时使用extends关键字指定这个类型的父类（或实现的接口），以确保没有用不适当的类型来实例化类型参数
+### 泛型数组
+>java本身不嫩创建泛型数组，所以在需要创建数组的地方使用ArrayList
+```java
+public class Generic <T>{
+  private List<T> list = new ArrayList<T>();
+
+  public void add(T item){
+    arr.add(item);
+  }
+  public T get(int index){
+    return arr.get(index);
+  }
+}
