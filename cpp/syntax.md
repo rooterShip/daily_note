@@ -21,9 +21,9 @@
   ```
 - 增加函数
   ```cpp
-  void push_back(const T& x); //
-  iterator insert(iterator it,const T& x); //
-  iterator insert(iterator it,int n,const T& x); //
+  void push_back(const T& x); //向量尾部增加一个元素x
+  iterator insert(iterator it,const T& x); //向量迭代器指向元素前增加一个元素x
+  iterator insert(iterator it,int n,const T& x); //向量迭代器指向元素前增加n个元素x
   iterator insert(iterator it,const_iterator first,const_iterator last)
   //向量中迭代器指向元素前插入另一个相同类型向量的[first,last)间的数据
   ```
