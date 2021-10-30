@@ -31,3 +31,55 @@
   ```cpp
   iterator erase(iterator it); //删除向量中迭代器指向元素
   iterator erase(iterator first,iterator last);//删除向量中[first,last)元素
+  void pop_back(); //删除向量中最后一个元素
+  void clear(); //清空向量中所有元素
+  ```
+- 遍历函数
+  ```cpp
+  reference at(int pos); //返货pos位置元素的引用
+  reference front(); //返回首元素的引用
+  reference back(); //返回尾元素的引用
+  iterator begin(); //返回向量头指针
+  iterator end(); //返回向量尾指针，指向向量最后一个元素的下一个位置
+  reverse_iterator rbegin(); //反向迭代器，指向最后一个元素
+  reverse_iterator rend(); //反向迭代器，指向第一个元素之前的位置
+- 判断函数
+  ```cpp
+  bool empty() const; //判断向量是否为空，若为空，则向量中无元素
+- 大小函数
+  ```cpp
+  int size() const; //返回向量中元素的个数
+  int capacity() const; //返回当前向量所能容纳的最大元素值
+  int max_size() const; //返回最大可也允许的vector元素数量值
+  ```
+  Supplement
+  >capacity,如果不重新分配内存,当前已经分配的可以容纳的元素的个数<br>
+  >max_size最大的可能的元素个数<br>
+  >size是当前元素个数<br>
+  >sizeof是vector本身的大小（sizeof(vector<int>)）<br>
+- 其他函数
+  ```cpp
+  void swap(vector&); //交换两个同类型向量的数据
+  void assign(int n,const T& x); //设置向量中前n个元素的值为x
+  void assign(const_iterator first,const_iterator last);//向量中[first,last)中元素设置成当前向量元素
+  ```
+***
+## 基本用法
+```cpp
+#inculde <vector>
+using namespace std;
+```
+***
+## 简单介绍
+- vector<类型>标识符
+  ```cpp
+  vector<int>obj;
+  ```
+- vector<类型>标识符(最大容量)
+  ```cpp
+  vector<int>obj(5);
+  ```
+- ```cpp
+  vector<vector<int>>v //二维向量
+  ```
+
