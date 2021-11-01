@@ -1,5 +1,8 @@
 package algorithm.binarySearch;
 
+import java.util.Arrays;
+import java.util.Scanner;
+
 class BinarySearch{
     public static int rank(int key,int[] a){
       //保证数组有序
@@ -15,6 +18,12 @@ class BinarySearch{
       return -1;
     }
     public static void main(String[] args) {
-      System.out.println("he");
+      Scanner scanner = new Scanner(System.in);
+      String str = scanner.next().toString();
+      String[] temp = str.split(" ");
+      int[] b = new int[temp.length];
+      for(int i = 0; i<=temp.length-1; i++)
+          b[i] = Integer.parseInt(temp[i]);
+      Arrays.sort(b);
     }
   }
