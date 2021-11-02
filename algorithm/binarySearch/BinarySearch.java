@@ -1,3 +1,5 @@
+//输入
+
 package algorithm.binarySearch;
 
 import java.util.Arrays;
@@ -5,25 +7,36 @@ import java.util.Scanner;
 
 class BinarySearch{
     public static int rank(int key,int[] a){
-      //保证数组有序
-      int lo = 0;
-      int hi = a.length-1;
-      while(lo <= hi){
-        //被查找的键要么不存在，要么必然存在于a[lo...hi]之中
-        int mid = lo+(hi-lo)/2;
-        if(key<a[mid]) hi = mid - 1;
-        else if(key>a[mid]) hi = mid + 1;
-        else return mid;
-      }
-      return -1;
+        //保证数组有序
+        int lo = 0;
+        int hi = a.length-1;
+        while(lo <= hi){
+          //被查找的键要么不存在，要么必然存在于a[lo...hi]之中
+          int mid = lo+(hi-lo)/2;
+          if(key<a[mid]) hi = mid - 1;
+          else if(key>a[mid]) lo = mid + 1;
+          else return mid;
+        }
+        return -1;
     }
     public static void main(String[] args) {
-      Scanner scanner = new Scanner(System.in);
-      String str = scanner.next().toString();
-      String[] temp = str.split(" ");
-      int[] b = new int[temp.length];
-      for(int i = 0; i<=temp.length-1; i++)
-          b[i] = Integer.parseInt(temp[i]);
-      Arrays.sort(b);
-    }
+        Scanner scanner = new Scanner(System.in);
+        String str = scanner.next().toString();
+        String str2 = scanner.next().toString();
+        String[] temp = str.split(",");
+        String[] temp2 = str2.split(",");
+        int[] key = new int[temp2.length];
+        int[] b = new int[temp.length];
+        for(int i = 0;i < temp2.length;i++)
+            key[i] = Integer.parseInt(temp2[i]); 
+        for(int i = 0; i<=temp.length-1; i++)
+            b[i] = Integer.parseInt(temp[i]);
+        Arrays.sort(b);
+        scanner.close();
+        for(int i = 0; i < key.length; i++){
+          if(rank(key[i],b)<0){
+            System.out.println(key[i]);  
+        }
+      }
   }
+}
