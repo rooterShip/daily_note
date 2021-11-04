@@ -1,4 +1,6 @@
-//输入
+//输入待查数字列表和待查数字
+//排序待查数字列表
+//将待查数字和数字列表传入二分查找函数
 
 package algorithm.binarySearch;
 
@@ -21,17 +23,22 @@ class BinarySearch{
     }
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
         String str = scanner.next().toString();
-        String str2 = scanner.next().toString();
+        String str2 = scanner.next().toString(); //不定长数组输入的方法，先赋值给字符串
+
         String[] temp = str.split(",");
-        String[] temp2 = str2.split(",");
+        String[] temp2 = str2.split(","); //将字符串以“，”分隔存入字符串数组
+
         int[] key = new int[temp2.length];
-        int[] b = new int[temp.length];
+        int[] b = new int[temp.length]; 
+
         for(int i = 0;i < temp2.length;i++)
             key[i] = Integer.parseInt(temp2[i]); 
         for(int i = 0; i<=temp.length-1; i++)
-            b[i] = Integer.parseInt(temp[i]);
-        Arrays.sort(b);
+            b[i] = Integer.parseInt(temp[i]); //将字符串数组赋值给整型数组
+            
+        Arrays.sort(b); //排序
         scanner.close();
         for(int i = 0; i < key.length; i++){
           if(rank(key[i],b)<0){
