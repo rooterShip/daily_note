@@ -30,11 +30,11 @@ ECMAScript变量是松散类型的--变量可以用于保存任何类型的数�
 - var
   - 定义变量
     ```js
-    var message; //可以保存任何类型的值（不初始化，变量保存特殊值undefined
+    var message; //可以保存任何类型的值（不初始化，变量保存特殊值undefined）
     ```
   - 定义变量并初始化
     ```js
-    var message = "hi"; //不会将变量标识为字符串
+    var message = "hi"; //不会将变量标识为字符串(存疑)
     message = 100;      //合法，不推荐
     ```
   - var声明作用域<br>
@@ -122,3 +122,68 @@ ECMAScript变量是松散类型的--变量可以用于保存任何类型的数�
     }
     console.log(i) //无定义
     ```
+- const声明<br>
+  - const行为与let基本相同，区别在于用const声明变量时必须同时初始化变量，并且尝试修改const声明的变量会导致运行错误。
+    ```js
+    const age = 26;
+    age = 36; //TypeError:给常量赋值
+
+    //const不允许重复声明
+    const name = 'Matt';
+    const name = 'Nicholas';
+
+    //const声明的作用域为块
+    const name = 'Matt';
+    if(ture)
+    {
+      const name = 'Nicholas';
+    }
+    console.log(name); //Matt
+    ```
+  - const声明的限制只适用于它指向变量的引用，当const变量引用的为对象时，修改这个对象内部的属性并不违反const的限制，eg:
+    ```js
+    const person = {};
+    person.name = 'Matt'; //ok
+    ```
+  - 不能用const来声明**迭代变量**
+    ```js
+    for(const i = 0; i < 10; i++) {} //TypeErroe:给常量赋值
+    ```
+- 最佳命名风格实践
+  - 不使用var
+  - const优先，let次之（提前知道未来会有修改时）
+## 数据类型
+***
+- typeof操作符（判断标识符类型）
+  - undefined&emsp;&ensp;&nbsp;值未定义
+  - boolean&emsp;&emsp;&ensp; 值为布尔值
+  - string&emsp;&emsp;&emsp;&ensp; 值为字符串
+  - number&emsp;&emsp;&ensp;&nbsp;值为数值
+  - object&emsp;&emsp;&emsp;&ensp;值为对象或null
+  - function&emsp;&emsp;&ensp;值为函数
+  - symbol&emsp;&emsp;&emsp;值为符号
+- undefined类型<br>
+  使用var或let声明了变量但没有初始化时 => 给变量赋予了undefined值
+  - 当变量未得到声明时，值不为undefined
+    ```js
+    let message;
+
+    //无 leg age;
+    console.log(message); //'undefined'
+    console.log(age); //报错
+    ```
+  - 当变量未得到声明或者未初始化时，其typeof后都为undefined
+    ```js
+    let message;
+
+    //无 let age;
+    console.log(typeof(message)); //'undefined'
+    console.log(typeof(age)); //'undefined'
+    ```
+- Null<br>
+  - Null类型包含唯一值--特殊值null，逻辑上讲，null表示一个空**对象指针**
+    ```js
+    let car = null;
+    console.log(typeof car); //"object"
+    ```
+  - 
