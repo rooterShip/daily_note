@@ -264,7 +264,7 @@ ECMAScript变量是松散类型的--变量可以用于保存任何类型的数�
     let num1 = parseInt("1234blue"); //1234
     let num2 = parseInt(""); //NaN -- 注意区别于Number函数的类型转换
     let num3 = parseInt("0xA"); //10
-    let num4 = parseInt(22.5); //22
+    let num4 = parseInt("22.5"); //22
     let num5 = parseInt("70"); //70
     let num6 = parseInt("0xf"); //15
     let num7 = pasrseInt("0xAF", 16); //175，第二个值为指定底数（进制数）
@@ -282,3 +282,40 @@ ECMAScript变量是松散类型的--变量可以用于保存任何类型的数�
     let num5 = parseFloat("0908.5"); // 908.5
     let num6 = parseFloat("3.125e7"); // 31250000
     ```
+- String类型
+  - String（字符串）数据类型表示零或多个16位Unicode字符序列。字符串可以使用双引号（"）、单引号（'）、或反引号（`）标示：
+    ```js
+    let firstname = "John";
+    let lastname = 'jacob'
+    let lastname = `Jingle`
+    ```
+    和c++等语言不同，ECMAScript语法中不同的引号不会改变对字符串的解释
+  - 字符字面量<br>
+    | 字面量 | 含义 |
+    | :----: | :----: |
+    | \n | 换行 |
+    | \t | 制表 |
+    | \b | 退格 |
+    | \r | 回车 |
+    | \f | 换页 |
+    | \\\ | 反斜杠(\\) |
+    | \\" | 双引号（"）|
+    | \\` | 反引号（`）|
+    | \\' |单引号（'），在字符串以单引号标示时使用，例如'He said, \'hey.\''|
+    | \\xnn | 以十六进制编码 nn 表示的字符（其中 n 是十六进制数字 0~F），例如\x41 等于"A"|
+    | \\unnnn | 以十六进制编码 nnnn 表示的 Unicode字符（其中 n 是十六进制数字 0~F），例如\u03a3 等于希腊字 符"Σ"|
+
+    字符面量可以出现在字符串中的任意位置 ，且可以作为**单个字符**被解释：
+    ```js
+    let text = "This is the letter sigma: \u03a3.";
+
+    console.log(text.length); //28，这里转义序列表示一个字符
+    ```
+  - ECMAScript中的字符串是不可变的（immutable），即字符串一旦被创建，其值就不可被改变。要修改某个变量中的字符串值，必须先销毁原始的字符串，然后将包含新值的另一个字符串保存到该变量：
+    ```js
+    let lang = "java";
+
+    lang = lang + "Script"
+    ```
+    在本例中，变量lang中一开始包含字符串"java"。当lang被重新定义为包含"java"和"script"的组合--"javascript"。整个过程首先会分配一个足够容纳10个字符的空间，然后填充上"java"和"script"。最后**销毁原始的字符串**"java"和字符串"Script"
+    
