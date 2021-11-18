@@ -186,4 +186,99 @@ ECMAScript变量是松散类型的--变量可以用于保存任何类型的数�
     let car = null;
     console.log(typeof car); //"object"
     ```
-  - 
+  - 在定义将来要保存对象值的变量时，建议使用null来初始化。因此，当判断一个变量是否在后来被重新赋予了一个对象的引用时，只要检查这个变量的值是不是null。
+    ```js
+    if(car != null){
+      // car是一个对象的引用
+    }
+    ```
+  - undefined和null的关系--undefined的值是由null值派生而来的，因此有：
+    ```js
+    console.log(null == undefined); //true
+    ```
+    不同于undefined，永远不必显示地将变量设置为undefined，任何时候，只要变量要保存对象，而当时又没有对象可保存，就要用null来填充变量。
+- Boolean类型
+  - 布尔值与不同类型之间的转换：<br>
+    | 数据类型 | 转换为ture的值 | 转换为false的值 |
+    | :----: | :----: | :----: |
+    | Boolean | true | false |
+    | string | 非空字符串 | ""(空字符串)|
+    | Number | 非零数值（包括无穷值） | 0、NaN |
+    | Object | 任意对象 | null |
+    | Undefined | N/A(不存在) | undefined |
+  - 流控制语句会自动执行其他类型值到布尔值的转换
+    ```js
+    let message = "Hello world";
+    if(message){ //将字符串自动转化为Boolean类型
+      console.log("Value is true");
+    }
+    ```
+- NaN <br>
+  - NaN -- Not a Number（不是数值），用于表示本来要返回数值的操作失败了（不是抛出错误）
+    ```js
+    console.log(0/0);   //NaN
+    console.log(-0/+0); //NaN
+    ```
+    ```js
+    console.log(5/0); //Infinity(正无穷大)
+    console.log(5/-0); //-Infinity(负无穷大)
+    ```
+  - NaN的独特属性
+    - 任何涉及NaN的操作始终返回NaN(连续多步计算时需要格外关注)
+      ```js
+      console.log(NaN/10); //NaN
+    - NaN不等于包括NaN在内的任何值
+      ```js
+      console.log(NaN == NaN); //false
+      ```
+  - isNaN()函数（判断参数是否“不是数值”）
+    - 该函数会尝试把不是数值的参数转化为数值，任何不能转换为数值的值都会导致这个函数返回true
+      ```js
+      console.log(isNaN(NaN)) //ture
+      console.log(isNaN(10)); //false,10为数值
+      console.log(isNaN("10")); //false, 可以转化为数值10
+      console.log(isNaN("blue")); //true,不可以转换为数值
+      console.log(isNaN(true)); //false,可以转换为数值1
+      ```
+- 数值转换
+  - Number()--转型函数，可用于任何数据类型<br>
+    - 对于布尔值，ture转换为1，false转换为0
+    - 对于数值，直接返回
+    - null，返回0
+    - undefined，返回NaN
+    - 对于字符串：
+      >若字符串包含数值字符，包括数值字符前面带加、减号的情况，则转换为一个十进制数值<br>
+      ```js
+      console.log(Number("1"))   //1
+      console.log(Number("123")) //123
+      console.log(Number("011")) //11
+      ```
+      >若字符串包含有效的浮点值格式，则会转换为相应的浮点值（规则如上）<br>
+      >若字符串包含有效的十六进制格式如“0xf",则会转换为十六进制对应的十进制整数值<br>
+      >若为空字符串（不包含字符），返回0
+      >若字符v换包含除上述情况之外的其他字符，返回NaN
+    - 对于对象：调用valueof()方法，并按照上述规则转换返回的值。如果转换结果时NaN,则调用toString()方法，再按照转换字符串的规则转换
+  - parseInt()--主要用于将字符串转换为数值<br>
+    规则如下：
+    ```js
+    let num1 = parseInt("1234blue"); //1234
+    let num2 = parseInt(""); //NaN -- 注意区别于Number函数的类型转换
+    let num3 = parseInt("0xA"); //10
+    let num4 = parseInt(22.5); //22
+    let num5 = parseInt("70"); //70
+    let num6 = parseInt("0xf"); //15
+    let num7 = pasrseInt("0xAF", 16); //175，第二个值为指定底数（进制数）
+
+    let num7 = pasrseInt("AF", 16); //175
+    let num7 = pasrseInt("AF"); //NaN
+    ```
+  - parseFloat()--主要用于将字符串转换为数值<br>
+    规则如下：
+    ```js
+    let num1 = parseFloat("1234blue"); // 1234，按整数解析 
+    let num2 = parseFloat("0xA"); //0
+    let num3 = parseFloat("22.5"); //22.5
+    let num4 = parseFloat("22.34.5"); // 22.34 
+    let num5 = parseFloat("0908.5"); // 908.5
+    let num6 = parseFloat("3.125e7"); // 31250000
+    ```
