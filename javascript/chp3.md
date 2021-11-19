@@ -363,4 +363,22 @@ ECMAScript变量是松散类型的--变量可以用于保存任何类型的数�
       }
     console.log(`${ capitalize('hello') }, ${ capitalize('world') }!`); 
     // Hello, World
+- Symbol类型
+  - 基本用法<br>
+    符号需要使用Symbol()函数初始化。且符号本身是**原始类型**
+    ```js
+    let sym = Symbol();
+    console.log(typeof sym); //symbol,typeof的两种用法
+    ```
+    调用Symbol()函数时，也可以传入一个字符串参数作为对符号的描述（description),将来可通过这个字符来调试代码，但该字符与符号定义或标识完全无关。
+    ```js
+    let genericSymbol = Symbol();
+    let otherGenericSymbol = Symbol();
+
+    let fooSymbol = Symbol('foo');
+    let otherFooSymbol = Symbol('foo');
+
+    console.log(genericSymbol == otherGenericSymbol); //false
+    console.log(fooSymbol == otherFooSymbol); //true
+    ```
     
