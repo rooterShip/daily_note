@@ -318,4 +318,49 @@ ECMAScript变量是松散类型的--变量可以用于保存任何类型的数�
     lang = lang + "Script"
     ```
     在本例中，变量lang中一开始包含字符串"java"。当lang被重新定义为包含"java"和"script"的组合--"javascript"。整个过程首先会分配一个足够容纳10个字符的空间，然后填充上"java"和"script"。最后**销毁原始的字符串**"java"和字符串"Script"
+  - 转换字符串：toString()--返回当前的字符串等价物，toString方法可见于数值、布尔值、对象和字符串值（字符串的toString()方法只是简单返回自身的一个副本）,null和undefined值没有toString()方法<br>
+    多数情况下，toString()不接收任何参数。当数值调用该方法时,默认情况下，toString()返回数值的十进制字符串表示，而通过传入参数，可以得到数值的二进制、八进制、十六进制，或者其他任何有效技术的字符串表示。
+    ```js
+    let num = 10;
+    console.log(num.toString()); //"10"
+    console.log(num.toString(2)); //"1010"
+    console.log(num.toString(8)); //"12"
+    console.log(num.toString(10)); //"10"
+    console.log(num.toString(16)); //"a"
+    ```
+    当不确定一个值是不是null或者undefined的时候，可以使用String()转型函数，它始终会返回相应类型值的字符串。String()函数遵循如下规则：
+    - 当值又toString()方法，则调用该方法（不传参数）并返回结果
+    - 当值是null，返回"null"
+    - 当值是undefined，返回"undefined"
+    ```js
+    let value1 = 10; 
+    let value2 = true;
+    let value3 = null; 
+    let value4;
+
+    console.log(String(value1)); // "10"
+    console.log(String(value2)); // "true" 
+    console.log(String(value3)); // "null"
+    console.log(String(value4)); // "undefined"
+    ```
+    supplement:
+    >用加号操作符给一个值加上一个空字符串""也可以将其转换为字符串
+  - 模板字面量：与使用单引号或双引号不同，模板字面量保留换行字符，可以跨行定义字符串<br>
+    用模板字面量插入字符串
+    ```js
+    let value = 5;
+    let exponent = 'second';
+
+    //传统插入方法
+    let insertRes0 = value + ' to the ' + exponent + ' power is ' + (value * value);
+
+    //模板字面量
+    let insertRes1 = `${value} to the ${exponent} power is ${value * value}`;
+
+    //在插值表达式中可以调用函数和方法：
+    function capitalize(word){ 
+      return `${ word[0].toUpperCase() }${ word.slice(1) }`; 
+      }
+    console.log(`${ capitalize('hello') }, ${ capitalize('world') }!`); 
+    // Hello, World
     
