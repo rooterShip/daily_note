@@ -93,12 +93,13 @@
   ```java
   public class Insertion{
       public static void sort(Comparable[] a){
-          //将a[]按升序排列
-          int N = a.length;
-          for(int i = 1; i < N; i++){
-              //将a[i]输入到a[i-1]、a[i-2]...之中
-              for(int j = i; j > 0 && less(a[j], a[j-1]); j--)
-              exch(a, j, j-1);
+          //将数组a[]按升序排列
+          int N = a.length();
+          for(int i = 1; i < N; i++){  //i要从1开始是因为a[j-1]
+              for(int j = i; j > 0 && less(a[j], a[j-1]); j--){
+                  exch(a, j, j-1);
+              }
           }
       }
   }
+  ```
