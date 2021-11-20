@@ -423,4 +423,43 @@ ECMAScript变量是松散类型的--变量可以用于保存任何类型的数�
     ```js
     let emptyGlobalSymbol = Symbol.for();
     console.log(emptyGlobalSymbol); //Symbol(undefined)
-    
+    ```
+    可以使用Symbol.keyFor()来查询**全局注册表**，此方法接收符号，返回该全局符号对应的字符串键。如果查询的不是全局符号，则返回undefined。
+    ```js
+    //创建全局符号
+    let s = Symbol.for('foo');
+    console.log(Symbol.keyFor(s)); //foo
+
+    //创建普通符号
+    let s2 = Symbol('bar');
+    console.log(Symbol.keyFor(s2)); //undefined
+
+    //如果传给Symbol.keyFor()的不是符号，则该方法抛出TypeError：
+    Symbol.keyFor(123); //TypeError: 123 is not a symbol
+    ```
+    应用场景：通常情况下，我们在一个浏览器窗口中（window），使用Symbol()函数来定义和Symbol实例就足够了。但是，如果你的应用涉及到多个window（eg:页面中使用了ifram），并需要这些window中使用的某些Symbol是同一个，我们就需要Symbol.for()来注册全局的Symbol实例：
+    ```js
+    let gs1 = Symbol.for('globbal_symbol_1') //注册全局symbol
+    let gs2 = Symbol.for('globbal_symbol_1') //获取全局Symbol
+
+    gs1 === gs2 //true
+    ```
+  - 使用Symbol来作为对象属性名（key）（tips：只有字符串和symbol类型才能用作对象属性名）
+    ```js
+    //用字符串来作属性名
+    let obj = {
+      "abc" : 123,
+      "hello" : "world"
+    }
+
+    console.log(obj["abc"]); //123
+    console.log(obj["hello"]); //hello
+
+    //用symbol类型来做属性名
+    const PROP_NAME = Symbol();
+    const PROP_AGE = Symbol();
+
+    let obj = {
+      [PROP_NAME] : "ababab",
+      [PROP_AGE] : "111111",
+    }
