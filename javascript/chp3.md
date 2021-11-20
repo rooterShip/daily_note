@@ -319,7 +319,7 @@ ECMAScript变量是松散类型的--变量可以用于保存任何类型的数�
     ```
     在本例中，变量lang中一开始包含字符串"java"。当lang被重新定义为包含"java"和"script"的组合--"javascript"。整个过程首先会分配一个足够容纳10个字符的空间，然后填充上"java"和"script"。最后**销毁原始的字符串**"java"和字符串"Script"
   - 转换字符串：toString()--返回当前的字符串等价物，toString方法可见于数值、布尔值、对象和字符串值（字符串的toString()方法只是简单返回自身的一个副本）,null和undefined值没有toString()方法<br>
-    多数情况下，toString()不接收任何参数。当数值调用该方法时,默认情况下，toString()返回数值的十进制字符串表示，而通过传入参数，可以得到数值的二进制、八进制、十六进制，或者其他任何有效技术的字符串表示。
+    多数情况下，toString()不接收任何参数。当数值调用该方法时,默认情况下，toString()返回数值的十进制字符串表示，而通过传入参数，可以得到数值的二进制、八进制、十六进制，或者其他任何有效基数的字符串表示。
     ```js
     let num = 10;
     console.log(num.toString()); //"10"
@@ -363,7 +363,7 @@ ECMAScript变量是松散类型的--变量可以用于保存任何类型的数�
       }
     console.log(`${ capitalize('hello') }, ${ capitalize('world') }!`); 
     // Hello, World
-- Symbol类型
+- Symbol类型(为了解决属性名冲突)
   - 基本用法<br>
     符号需要使用Symbol()函数初始化。且符号本身是**原始类型**
     ```js
@@ -376,9 +376,51 @@ ECMAScript变量是松散类型的--变量可以用于保存任何类型的数�
     let otherGenericSymbol = Symbol();
 
     let fooSymbol = Symbol('foo');
-    let otherFooSymbol = Symbol('foo');
+    let otherFooSymbol = Symbol('foo'); 
 
     console.log(genericSymbol == otherGenericSymbol); //false
-    console.log(fooSymbol == otherFooSymbol); //true
+    console.log(fooSymbol == otherFooSymbol); //false 具有两个相同的description值的symbol也是不相等的--没有任何两个symbol是相等的
     ```
+    Symbol()函数不能与new关键字一起作为构造函数使用，这样做是为了避免创建符号包装对象。Boolean、String和Number都支持构造函数且可用于初始化包含原始值的包装对象：
+    ```js
+    let myBoolean = new Boolean();
+    console.log(typeof myBoolean); //object
+
+    let myString = new String();
+    console.log(typeof myString); //object
+
+    let myNumber = new Number();
+    console.log(typeof myNumber); //object
+
+    let mySymbol = new Symbol(); //typeError:Symbol is not a constructor
+
+    //可以采用：
+    let mySymbol = Symbol();
+    let = myWrappedSymbol = Object(mySymbol);
+    conaole.log(typeof myWrappedSymbol); //object
+    ```
+  - 使用全局符号注册表<br>
+    当运行时的不同部分需要共享和重用符号实例时，可以用一个字符串(description)作为键，在全局符号注册表中创建并重用符号。此时要用到Symbol.for()方法：
+    ```js
+    let fooGlobalSymbol = Symbol.for('foo');
+    console.log(typeof foolGlobalSymbol); //symbol
+    ```
+    Symbol.for()对每个字符串键都执行幂等操作。第一次使用某个字符串调用时，会检查全局运行时注册表，发现不存在对应的符号，于是就会生成一个新符号实例并添加到注册表。后续使用相同字符串的调用同样会检查注册表，发现存在与该字符串相对应的符号，然后就会返回该符号实例
+    ```js
+    let fooGlobalSymbol = Symbol.for('foo'); //创建新符号
+    let otherFoolGlobalSymbol = Symbol.for('foo') //重用已有符号
+
+    console.log(fooGlobalSymbol === otherFoolGlobalSymbol); //true
+    ```
+    即使采用相同的符号描述，在全局注册表中定义的符号跟使用Symbol()定义的符号也并不等同：
+    ```js
+    let localSymbol = Symbol('foo');
+    let globalSymbol = Symbol.for('foo');
+
+    console.log(localSymbol === globalSymbol); //false
+    ```
+    全局注册表中的符号必须使用字符串键来创建，因此作为参数传给Symbol.for()的任何值都会被转换为字符串，与此同时，注册表中使用的键同时也会被用作符号描述。
+    ```js
+    let emptyGlobalSymbol = Symbol.for();
+    console.log(emptyGlobalSymbol); //Symbol(undefined)
     
