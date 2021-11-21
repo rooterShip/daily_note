@@ -257,7 +257,8 @@ ECMAScript变量是松散类型的--变量可以用于保存任何类型的数�
       >若字符串包含有效的十六进制格式如“0xf",则会转换为十六进制对应的十进制整数值<br>
       >若为空字符串（不包含字符），返回0
       >若字符v换包含除上述情况之外的其他字符，返回NaN
-    - 对于对象：调用valueof()方法，并按照上述规则转换返回的值。如果转换结果时NaN,则调用toString()方法，再按照转换字符串的规则转换
+    - 对于对象：
+      >调用valueof()方法，并按照上述规则转换返回的值。如果转换结果时NaN,则调用toString()方法，再按照转换字符串的规则转换
   - parseInt()--主要用于将字符串转换为数值<br>
     规则如下：
     ```js
@@ -460,6 +461,215 @@ ECMAScript变量是松散类型的--变量可以用于保存任何类型的数�
     const PROP_AGE = Symbol();
 
     let obj = {
-      [PROP_NAME] : "ababab",
+      [PROP_NAME] : "ababab",  //注意用symbol变量做属性名的时候要加框
       [PROP_AGE] : "111111",
     }
+    ```
+    但当Symbol作为对象的属性key后，在对该对象进行key的枚举时，是不能通过Object.keys()或者for...in来枚举,它未被包含在对象自身的属性名集合（property names）之中，所以利用该特性，我们可以把一些不需要对外操作和访问的属性使用Symbol来定义。此外，当使用JSON.stringify()将对象转换成JSON字符串的时候，Symbol属性也会被排除在输出内容之外。
+    ```js
+    let obj = {
+      [Symbol('name')] : 'ahahah',
+      age : 18,
+      title : 'Engineer'
+    }
+
+    Object.keys(obj) //['age', 'title']
+
+    for(let p in obj){
+      console.log(p) //分别输出：'age'和'title'
+    }
+
+    object.getOwnPropertyNames(obj); //'age','title'
+
+    JSON.stringify(obj); //{"age":18,"title":"engineer}
+    ```
+    利用针对Symbol的API获取以Symbol方式定义的对象属性：
+    ```js
+    //使用Object的API
+    Object.getOwnPropetySymbols(obj) //[Symbol('name')]
+
+    //使用新增的反射API
+    Reflect.ownKeys(obj) //[Symbol('name'), 'age', 'title']
+    ```
+  - 使用Symbol来替代常量<br>
+    通常在代码中定义常量时，是希望这几个常量之间是唯一的关系，为了保证这一点，我们需要为常量赋一个唯一的值，我们可以利用Symbol的唯一性来为常量赋值：
+    ```js
+    //传统方法
+    const TYPE_AUDIO = 'AUDIO'
+    const TYPE_VIDEO = 'VIDEO'
+    const TYPE_IMAGE = 'IMAGE'
+
+    //symbol
+    const TYPE_AUDIO = Symbol()
+    const TYPE_VIDEO = Symbol()
+    const TYPE_IMAGE = Symbol()
+    ```
+  - Symbol的内置值
+    - Symbol.asyncIterator
+      >一个方法，返回对象默认的AsyncIterator,由for-await-of语句使用(实现异步迭代器API的函数)
+    - Symbol.hasInstance
+      >一个方法，该方法决定一个构造器对象是否认可一个对象是它的实例。由instanceof操作符使用
+    - Symbol.isConcatSpredable
+      >一个布尔值，如果是true，意味着对象应该用Array.prototype.concat()打平其数组元素。<br>
+
+      ES6中的Array.prototype.concat()方法会根据接收到的对象类型选择如何将一个类数组对象拼接成数组实例。覆盖Symbol.isConcatSpreadable的值可以修改这个行为
+      对象的Symbol.isConcatSpreadable属性等于的是一个布尔值，表示该对象用于 Array.prototype.concat()时，是否可以展开
+      ```js
+      const arr = [1, 2, 3];
+      const arr2 = [4, 5, 6];
+      arr2[Symbol.isConcatSpreadable] = true;
+      console.log(arr.concat(arr2)); //[1, 2, 3, 4, 5, 6]
+
+      arr2[Symbol.isConcatSpreadable] = false;
+      console.log(arr.concat(arr2)); //[1, 2, 3, [4, 5, 6]]
+      ```
+    - Symbol.iterator
+      >一个方法，该方法返回对象默认的迭代器。由for-of语句使用（这个符号表示实现迭代器API的函数）
+    - Symbol.match
+      >一个正则表达式方法，该方法用正则表达式去匹配字符串。由String.prototype.match()方法使用
+    - Symbol.replace
+      >一个正则表达式方法，该方法返回字符串中匹配正则表达式的索引。由String.prototype.search()方法使用
+    - Symbol.split
+      >一个正则表达式方法，该方法在匹配正大表达式的索引位置拆分字符串。由String.prototype.split()方法使用。
+    - Symbol.toPrimitive
+      >一个方法，该方法将对象转换为相应的原始值。由ToPrimitive抽象操作使用
+    - Symbol.toStringTag
+      >一个字符串，该字符串用于创建对象的默认字符串描述。由内置方法Object.prototype.toString()使用
+    - Symbol.unscopables
+      >一个对象，该对象所有的以及继承的属性，都会从关联对象的with环境绑定中排除
+- Object类型
+  - 基本用法<br>
+    ECMAScript中的对象其实就是一组数据和功能的集合，开发者可以通过创建Object类型的实例来创建自己的对象，然后再给对象添加属性和方法
+    ```js
+    let o = new Object();
+
+    let o = new Object; //合法，不推荐
+    ```
+  - Object实例的属性和方法<br>
+    - constructor:用于创建当前对象的函数。
+    - hasownProperty(propertyName):用于判断当前对象实例（不是原型）上是否存在给定的属性。要检查的属性名必须是字符串或**符号**（结合前面Symbol）。
+    - isPrototypeof(object):用于判断当前对象是否为另一个对象的原型。
+    - propertyIsEnumerable(propertyName):用于判断给定的属性是否可以使用for-in语句枚举，同理，属性名必须是字符串。
+    - toLocaleString():返回对象的字符串表示，该字符串反应对象所在本地的化执行环境。
+    - toString():返回对象的字符串表示。
+    - valueOf():返回对象对应的字符串、数值或布尔值表示。通常与toString()的返回值相同。<br>
+   由于在ECMAScript中Object是所有对象的基类，所以任何对象都有这些属性和方法。
+## 操作符
+  >ECMAscript中的操作符是独特的，它们可用于各种值，包括字符串、数值、布尔值，甚至还有**对象**。在应用给对象时，操作符通常会调用valueOf()或toString()方法来取得可以计算的值。
+  - 一元操作符
+    - 递增/递减操作符（参考C语言）
+    - 一元加和减<br>
+     如果将一元加应用到非数值，则会执行与使用Number()转型函数一样的类型转换：布尔值false和true转换为0和1，字符串根据特殊规则进行解析，对象调用它们的valueOf()和toString()...
+      ```js
+      let s1 = "01";
+      let s2 = "1.1";
+      let s3 = "z";
+      let b = false;
+      let f = 1.1;
+      let o = {
+        valueOf(){
+          return -1;
+        }
+      }
+
+      s1 = +s1; // 值变成数值 1 
+      s2 = +s2; // 值变成数值 1.1 
+      s3 = +s3; // 值变成 NaN 
+      b = +b; // 值变成数值 0 
+      f = +f; // 不变，还是 1.1
+      o = +o; // 值变成数值-1
+      ```
+      对数值使用一元减会将其变成相应的负值。在应用到非数值时，一元减会遵 循与一元加同样的规则，先对它们进行转换，然后再取负值：
+      ```js
+      s1 = -s1; // 值变成数值 1 
+      s2 = -s2; // 值变成数值 1.1 
+      s3 = -s3; // 值变成 NaN 
+      b = -b; // 值变成数值 0 
+      f = -f; // 不变，还是 1.1
+      o = -o; // 值变成数值-1
+      ```
+    - 位操作符
+      - 按位非：~
+      - 按位与：&
+      - 按位或：|
+      - 按位异或：^
+      - 左移：<<
+      - 有符号右移：>>
+      - 无符号右移：>>>
+    - 逻辑操作符
+      - 逻辑非：！<br>
+        逻辑非始终返回布尔值，无论应用到的是什么数据类型--首先将操作数转换为布尔值，然后再对其取反。所以可以用于把任意值转换为布尔值（同时使用两个感叹号）
+      - 逻辑与：&&<br>
+        逻辑与并不一定会返回布尔值，且遵循短路操作
+        - 如果第一个操作数是对象，则返回第二个操作数。
+        - 如果第二个操作数是对象，则只有第一个操作数求值为 true 才会返回该对象。
+        - 如果两个操作数都是对象，则返回第二个操作数。
+        - 如果有一个操作数是 null，则返回 null。
+        - 如果有一个操作数是 NaN，则返回 NaN。
+        - 如果有一个操作数是 undefined，则返回 undefined。
+      - 逻辑或：||<br>
+          逻辑或并不一定会返回布尔值，且遵循短路操作
+        - 如果第一个操作数是对象，则返回第一个操作数。
+        - 如果第一个操作数求值为 false 则会返回第二个操作数。
+        - 如果两个操作数都是对象，则返回第一个操作数。
+        - 如果有两个操作数是 null，则返回 null。
+        - 如果有两个操作数是 NaN，则返回 NaN。
+        - 如果有两个操作数是 undefined，则返回 undefined。
+    - 指数操作符<br>
+      - 指数操作符：**（同python）
+      - 指数赋值操作符：**=
+        ```js
+        let squared = 3;
+        squraed **= 2; //9
+        ```
+## 语句
+- if语句（条件不一定要布尔值，可以转化）
+- do-while语句
+- while语句
+- for语句
+- for-in语句<br>
+  for-in语句是一种严格的迭代语句，用于枚举对象中的**非符号键属性**
+  ```js
+  for(property in expression){
+    statement
+  }
+  ```
+- for-of语句<br>
+   ```js
+  for(property of expression){
+    statement
+  }
+  ```
+- 标签语句<br>
+  标签语句用于给语句加标签
+  ```js
+  label : statement
+
+  //start是一个标签，可以在后面通过break或continue语句引用，标签语句的典型应用场景是嵌套循环
+  start: for(let i = 0; i < count; i++){
+    console.log(i);
+  }
+  ```
+- break和continue语句<br>
+  break和continue可以与标签语句一起使用，返回代码中特定的位置。
+  ```js
+  let num = 0;
+
+  outermost:
+  for(let i = 0; i < 10; i++){
+    for(let j = 0; j < 10; j++){
+      if(i == 5 && j == 5){
+        break outermost; //本应退出内循环，现在强制退出到标签处，continue同理
+      }
+      num++;
+    }
+  }
+
+  console.log(num); //55
+  ```
+- with语句<br>(不推荐使用)
+  with语句的用途是将代码作用域设置为特定的对象
+  ```js
+  with (expression) statement;
+  ```
+- switch语句（在比较每个条件值时会使用全等操作符，不会强制转换数据类型，即10！="10"）
