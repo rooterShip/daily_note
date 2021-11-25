@@ -75,3 +75,20 @@ ECMAScript变量可以包含两种不同类型的数据：原始值和引用值<
     obj.name = 'Greg';
   }
   ```
+- 确定类型<br>
+  typeof操作符适合用来判断一个变量是否为原始类型，当一个变量是引用类型的时候，typeof只能返回object，并不能返回具体的object。<br>
+  ECMAScript提供了instacnceof操作符，语法如下：
+  ```js
+  result = variable instanceof constructor;
+
+  console.log(person instanceof Object); //变量person是Object吗？ true or false
+  console.lof(colors instanceof Array); //变量colors是Array吗？ true or false
+  console.lof(pattern instanceof RegExp); //变量Pattern是RegExp吗？ true or false
+  ```
+## 执行上下文与作用域<br>
+***
+变量或函数的执行上下文决定了它们可以访问哪些数据，以及它们的行为。每个上下文都有一个关联的**变量对象（variable object)**，而这个上下文中定义的所有变量和函数都存在于这个对象上。虽然无法通过代码访问变量，但后台处理数据会用到它。
+- 全局上下文<br>
+  全局上下文是最外层的上下文。根据ECMAScript实现的宿主环境，表示全局上下文的对象可能不一样。在浏览器中，全局上下文就是我们常说的window对象，因此通过var定义的全局变量和函数都会成为window对象的属性和方法。使用let和const的顶级声明不会定义在全局上下文中，但在作用域链解析上效果是一样的。上下文在其所有代码都执行完毕后会被销毁，包括定义在它上面的所有变量和函数。<br>
+  每个函数调用都有自己的（执行）上下文。当代码执行流进入函数时，函数的上下文被推到一个上下文栈上（栈顶）。在函数执行完之后，上下文栈会弹出该函数上下文，将控制权返还给之前的执行上下文。ECMAScript程序的执行流程就是通过这个上下文栈进行控制的。<br>
+  上下文中的代码在执行的时候，会创建变量对象的一个**作用域链**（scope chain），这个作用域链决定了各级上下文中的代码在访问变量和函数时的顺序。代码正在执行的上下文的变量对象始终位于作用域的最前端。如果上下文是函数，则其**活动对象（activation object）**用作变量对象。活动对象最初只有一个定义变量：arguments。（全局上下文中没有这个变量）作用域链中的下一个变量对象来自包含上下文，再下一个对象来自再下一个包含上下文。以此类推直至全局上下文；全局上下文的变量对象始终是作用域链的最后一个变量对象。
