@@ -8,6 +8,21 @@
   - Spring的ORM和DAO提供了第三方持久层框架的良好整合，并简化了底层的数据库访问
   - Spring的高度开放性，并不强制应用完全依赖于Spring，开发者可自由选用Spring框架的部分或全部
 # Spring的核心机制
+## 框架组件
+- Spring Core<br>
+  核心容器，提供Spring框架的基本功能，其主要组件BeanFactory是**工厂模式**的实现。通过控制反转（loc）机制，将应用程序配置和依赖性规范与实际的程序代码分离开。
+- Spring Context<br>
+  向Spring框架提供上下文信息，包括企业服务，如JNDI、EJB、电子邮件、国际化、校验和调度等。
+- Spring AOP<br>
+  通过配置管理特性，可以很容易地使Sprig框架管理的任何对象支持AOP。Spring AOP直接将面向方面编程的功能集成到Spring框架中。 它为基于Spring应用程序的对象提供了事务管理服务。
+- Spring DAO<br>
+  JDBC DAO抽象层提供了有用的异常层次结构，用来管理异常处理和不同数据库供应商抛出的错误消息。异常层次结构简化了错误处理，面向JDBC的异常符合通用的DAO异常层次结构。
+- Spring ORM(对象关系映射，用面向对象的思想去操作数据库中的表）<br>
+  Spring框架插入了若干的ORM框架，提供了ORM的对象关系工具，其中包括JDO(持久化新规范)、Hibernate和iBatis SQL Map，并且都遵从Spring的通用事务和DAO异常层次结构。
+- Spring Web
+  为基于Web的应用程序提供上下文。建立在应用程序上下文模块之上。
+- Spring Web MVC
+  是一个全功能构建Web应用程序的MVC实现。
 ## 管理Bean
 ***
 程序主要是通过Spring容器来访问容器中的Bean,ApplicationContext是Spring容器最常用的接口，该接口有如下两个实现类：
@@ -37,6 +52,34 @@ public class BeanTest{
 ## 设值注入（setter注入）
 ***
 设值注入是指loC容器通过成员变量的setter方法来注入被依赖对象。这种注入方式简单直观。
+```java
+//构建Human的接口Human.java
+public interface Human{
+  public void speak();
+}
+
+//构建Language的接口Language.java
+public interface Language{
+  public String kind();
+}
+
+//实现Human的接口Chinese.java
+public class Chinese{
+  private Language lan;
+  public void speak(){
+    System.out.println(lan.kind());
+  }
+}
+
+//实现Language的接口English
+public class English{
+  public String kind(){
+    return "讲英语";
+  }
+}
+
+//按照传统模式，为了将Language类型的变量传入到Chinese中去，要同时声明两个对象
+```
 ## 构造注入
 ***
 利用构造器来设置依赖关系的方式，被成为构造注入。即驱动Spring在底层以反射方式执行带指定参数的构造器，当执行带参数的构造器时，就可利用构造器参数对成员变量执行初始化。
@@ -88,7 +131,9 @@ AOP实现可分为：
 - 增强处理（Advice）: AOP框架在特定的切入点执行的增强处理。处理有"around"、"before"和"after"等类型
 - 切入点（pointcut）：可以插入增强处理的连接点。
 ***
-***
+## 代理机制初探
+- 问题由来<br>
+  程序种经常需要为某些动作或事件做记录，以便随时检查
 # note_src:www.runoob.com
 
 
