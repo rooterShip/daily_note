@@ -64,25 +64,81 @@ public interface Language{
 }
 
 //实现Human的接口Chinese.java
-public class Chinese{
+public class Chinese implements Human{
   private Language lan;
   public void speak(){
     System.out.println(lan.kind());
   }
+  //设值注入内核
+  public void setLan(Language lan){
+    this.lan = lan;
+  }
 }
 
 //实现Language的接口English
-public class English{
+public class English implements Language{
   public String kind(){
     return "讲英语";
   }
 }
-
-//按照传统模式，为了将Language类型的变量传入到Chinese中去，要同时声明两个对象
+```
+```xml
+<!-- 按照传统模式，为了将Language类型的变量传入到Chinese中去，要同时声明两个对象实例才能引用，现在利用spring的设值注入进行配置 -->
+<?xml version="1.0" encoding="UTF-8"?>
+  <beans>
+  <!--定义第一个Bean，注入Chinese类对象 -->
+  <bean id="chinese" class="Chinese">
+  <!-- property元素用来指定需要容器注入的属性，lan属性需要容器注入 ref就指向lan注入的id -->
+    <property name="lan" ref="english"></property>
+  </bean>
+  <!-- 注入English -->
+  <bean id="english" class="English"></bean>
+</beans>
+```
+```java
+//测试代码
+import org.springframework.context.applicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
+public class Test{
+  public static void main(String[] agrs){
+    ApplicationContext ctx = new FileSystemXmlApplicationContext("src/applicationContext.xml");
+    Human human = new Human();
+    human = null;
+    human = (Human)ctx.getBean("chinese");
+    human.speak();
+  }
+}
 ```
 ## 构造注入
 ***
 利用构造器来设置依赖关系的方式，被成为构造注入。即驱动Spring在底层以反射方式执行带指定参数的构造器，当执行带参数的构造器时，就可利用构造器参数对成员变量执行初始化。
+```java
+...
+//对chinese类进行修改,通过构造函数实现对lan值的注入--构造注入
+public class chinese implements Human{
+  private Language lan;
+  public chinese(Language lan){
+    this.lan = lan;
+  }
+  public void speak(){
+    System.out.println(lan.kind());
+  }
+}
+...
+```
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+  <!-- 定义第一个Bean,注入Chinese类对象 -->
+  <bean id="chinese" class="Chinese">
+  <!-- 使用构造注入，为Chinese实例注入Language实例 -->
+    <constructor-arg="english"></constructor-arg>
+  </bean>
+  <!-- 注入English -->
+  <bean id="english" class="English">
+  </bean>
+</beans>
+```
 ## 两种注入方式对比
 ***
 - 设值注入优点：
