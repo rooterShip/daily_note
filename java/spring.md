@@ -175,25 +175,10 @@ Spring框架就是根据配置文件来创建Bean实例，并调用Bean实例的
 AOP(Aapect Orient Programming)--面向切面编程，作为面向对象编程的一种补充<br>
 AOP专门用于处理系统中分布于各个模块（不同方法）中的交叉关注点的问题，在javaEE应用中，常用AOP处理一些具有横切性质的系统级的服务，如事务管理
 、安全检查、缓存、对象池管理等
-## 使用AspectJ实现AOP
-AspectJ是一个基于Java语言的AOP框架，提供了强大的AOP功能，其他很多AOP框架都借鉴或采纳其中的一些思想。其主要包括两个部分：一个部分定义了如何表达、定义AOP编程中的语法规范，通过这套语法规范，通过这套规范，可以方便地用AOP来解决Java语言中存在的交叉关注点的问题；另一个部分时工具部分，包括编译调试工具等。<br>
-AOP实现可分为：
-- 静态AOP实现：AOP框架在编译阶段对程序进行修改，即实现对目标的增强，生成静态的AOP代理类，以AspectJ为代表
-- 动态AOP实现：AOP框架在运行阶段动态生成AOP代理，以实现对目标对象的增强，以Spring AOP为代表
-## AOP的基本概念
-关于面向切面编程的一些术语：
-- 横切关注点（cross-cutting concerns）：在一个应用程序中常被安排到各个类的处理流程之中的动作（日志，安全检查等等）。
-- 切面（Aspect）：散落在各个业务类中的cross-cutting concerns收集起来，设立各自独立可重用的类。
-- 通知（Advice）：(Spring提供了5种Advice类型)
-  - Interception Around Advice:在目标对象的方法执行前后被调用
-  - Before Advice:在目标对象的方法执行前被调用
-  - After Returning Advice:在目标对象的方法执行后被调用。
-  - Throw Advice:在目标对象的方法抛出异常时被调用
-  - Introduction Advice:一种页数类型的拦截通知，只有在目标对象的方法调用完毕后执行。
-- 切入点（pointcut）：可以插入增强处理的连接点。**定义了通知Advice应用的时机
-- 连接点（Joinpoint）：程序执行过程中明确的点，如方法的调用，或者异常的抛出。在Spring AOP中，连接点总是方法的调用。
+
+
+## 代理机制
 ***
-## 代理机制初探
 - 问题由来<br>
   程序种经常需要为某些动作或事件做记录，以便随时检查程序运行过程和排除错误信息。当需要在执行某些方法时留下日志信息：
   ```java
@@ -306,5 +291,23 @@ AOP实现可分为：
     }
   }
   ```
-  关于本例，HelloSpeaker本身的职责是显示文字，却必须插入日志动作，使得HelloSpeaker的职责加重。日志的程序代码横切（cross-cutting)到HelloSpeaker的程序执行流程中，类似日志这样的动作在AOP术语中称为**横切关注点（cross-cutting concerns）**。使用代理类将记录与业务逻辑无关的动作提取出来，设计为一个服务类，如同前面的范例HelloProxy或者LogHandler，这样的类称为切面（Aspect)。AOP中的Aspect所指的可以是像日志这类的动作或服务，将这些动作（横切关注点-cross-cutting concerns）设计为**通用、不介入特定业务类的一个职责清楚的Aspect类，这既是Aspect-Oriented Programming(AOP)。                             
-# note_src:www.runoob.com
+  关于本例，HelloSpeaker本身的职责是显示文字，却必须插入日志动作，使得HelloSpeaker的职责加重。日志的程序代码横切（cross-cutting)到HelloSpeaker的程序执行流程中，类似日志这样的动作在AOP术语中称为**横切关注点（cross-cutting concerns）**。使用代理类将记录与业务逻辑无关的动作提取出来，设计为一个服务类，如同前面的范例HelloProxy或者LogHandler，这样的类称为切面（Aspect)。AOP中的Aspect所指的可以是像日志这类的动作或服务，将这些动作（横切关注点-cross-cutting concerns）设计为**通用、不介入特定业务类的一个职责清楚的Aspect类，这既是Aspect-Oriented Programming(AOP)。
+## AOP的基本概念
+***
+关于面向切面编程的一些术语：
+- 横切关注点（cross-cutting concerns）：在一个应用程序中常被安排到各个类的处理流程之中的动作（日志，安全检查等等）。
+- 切面（Aspect）：散落在各个业务类中的cross-cutting concerns收集起来，设立各自独立可重用的类。
+- 通知（Advice）：(Spring提供了5种Advice类型)
+  - Interception Around Advice:在目标对象的方法执行前后被调用
+  - Before Advice:在目标对象的方法执行前被调用
+  - After Returning Advice:在目标对象的方法执行后被调用。
+  - Throw Advice:在目标对象的方法抛出异常时被调用
+  - Introduction Advice:一种页数类型的拦截通知，只有在目标对象的方法调用完毕后执行。
+- 切入点（pointcut）：可以插入增强处理的连接点。**定义了通知Advice应用的时机
+- 连接点（Joinpoint）：程序执行过程中明确的点，如方法的调用，或者异常的抛出。在Spring AOP中，连接点总是方法的调用。
+## 使用AspectJ实现AOP
+***
+AspectJ是一个基于Java语言的AOP框架，提供了强大的AOP功能，其他很多AOP框架都借鉴或采纳其中的一些思想。其主要包括两个部分：一个部分定义了如何表达、定义AOP编程中的语法规范，通过这套语法规范，通过这套规范，可以方便地用AOP来解决Java语言中存在的交叉关注点的问题；另一个部分时工具部分，包括编译调试工具等。<br>
+AOP实现可分为：
+- 静态AOP实现：AOP框架在编译阶段对程序进行修改，即实现对目标的增强，生成静态的AOP代理类，以AspectJ为代表
+- 动态AOP实现：AOP框架在运行阶段动态生成AOP代理，以实现对目标对象的增强，以Spring AOP为代表                            
