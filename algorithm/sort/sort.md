@@ -103,7 +103,8 @@
   public class Insertion{
       public static void sort(Comparable[] a){
           //将数组a[]按升序排列
-          int N = a.length();
+          //由已经排好序的右面第一个数字和已经排好序的左边挨个比较
+          int N = a.length;
           for(int i = 1; i < N; i++){  //i要从1开始是因为a[j-1]
               for(int j = i; j > 0 && less(a[j], a[j-1]); j--){
                   exch(a, j, j-1);
