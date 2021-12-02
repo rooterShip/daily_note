@@ -182,10 +182,16 @@ AOP实现可分为：
 - 动态AOP实现：AOP框架在运行阶段动态生成AOP代理，以实现对目标对象的增强，以Spring AOP为代表
 ## AOP的基本概念
 关于面向切面编程的一些术语：
-- 切面（Aspect）：切面用于组织多个Advice，Advice放在切面中定义
+- 横切关注点（cross-cutting concerns）：在一个应用程序中常被安排到各个类的处理流程之中的动作（日志，安全检查等等）。
+- 切面（Aspect）：散落在各个业务类中的cross-cutting concerns收集起来，设立各自独立可重用的类。
+- 通知（Advice）：(Spring提供了5种Advice类型)
+  - Interception Around Advice:在目标对象的方法执行前后被调用
+  - Before Advice:在目标对象的方法执行前被调用
+  - After Returning Advice:在目标对象的方法执行后被调用。
+  - Throw Advice:在目标对象的方法抛出异常时被调用
+  - Introduction Advice:一种页数类型的拦截通知，只有在目标对象的方法调用完毕后执行。
+- 切入点（pointcut）：可以插入增强处理的连接点。**定义了通知Advice应用的时机
 - 连接点（Joinpoint）：程序执行过程中明确的点，如方法的调用，或者异常的抛出。在Spring AOP中，连接点总是方法的调用。
-- 增强处理（Advice）: AOP框架在特定的切入点执行的增强处理。处理有"around"、"before"和"after"等类型
-- 切入点（pointcut）：可以插入增强处理的连接点。
 ***
 ## 代理机制初探
 - 问题由来<br>
@@ -282,5 +288,23 @@ AOP实现可分为：
       return null;
     }
   }
-  ```                                                                                                                                                                                  
+
+  //测试程序
+  import java.lang.reflect.Proxy;
+  public class ProxyDemo{
+    public static void main(String[] args){
+      HelloSpeaker helloSpeaker = new HelloSpeaker();
+      LogHandler logHandler = new LogHandler(helloSpeaker);
+      Class cls = helloSpeaker.getClass();
+      //newProxyInstance的参数：
+      //@param 被代理类的类构造器。
+      //@param 被代理类的接口
+      //@param 实现这个代理过程的类
+      IHello iHello = (IHello)Proxy.newProxyInstance(cls.getClassLoader(),cls.getInterfaces(),logHandler);
+      //注意静态代理测试的时候是用接口声明代理类的对象，动态代理是固定API，参数传入代理类（参考newProxyInstance第三个参数）
+      iHello.hello("justin");
+    }
+  }
+  ```
+  关于本例，HelloSpeaker本身的职责是显示文字，却必须插入日志动作，使得HelloSpeaker的职责加重。日志的程序代码横切（cross-cutting)到HelloSpeaker的程序执行流程中，类似日志这样的动作在AOP术语中称为**横切关注点（cross-cutting concerns）**。使用代理类将记录与业务逻辑无关的动作提取出来，设计为一个服务类，如同前面的范例HelloProxy或者LogHandler，这样的类称为切面（Aspect)。AOP中的Aspect所指的可以是像日志这类的动作或服务，将这些动作（横切关注点-cross-cutting concerns）设计为**通用、不介入特定业务类的一个职责清楚的Aspect类，这既是Aspect-Oriented Programming(AOP)。                             
 # note_src:www.runoob.com
