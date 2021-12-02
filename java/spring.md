@@ -189,9 +189,98 @@ AOP实现可分为：
 ***
 ## 代理机制初探
 - 问题由来<br>
-  程序种经常需要为某些动作或事件做记录，以便随时检查
+  程序种经常需要为某些动作或事件做记录，以便随时检查程序运行过程和排除错误信息。当需要在执行某些方法时留下日志信息：
+  ```java
+  import java.util.logging.*;
+  public class HelloSpeaker{
+    private Logger logger = Logger.getLonger(this.getClass().getName());
+    public void hello(String name){
+      logger.log(Level.INFO,"hello method starts...");
+      System.out.println("hello,"+name);
+      logger.log(Level.INFO,"hello method ends...");
+    }
+  }
+  ```
+  这种方法简单容易理解，但这种添加的日志不属于HelloSpeaker逻辑，使得HelloSpeaker增加了额外的职责，且难维护。为解决这个问题，代理（Proxy）机制出现了：静态代理（Static Proxy）和动态代理（Dynamic Proxy）
+- 静态代理<br> 
+  在静态代理的实现中，代理类与被代理类必须实现同一个接口，在代理类中可以实现记录等相关服务，并在需要的时候再呼叫被代理类。
+  ```java
+  //首先定义一个IHello接口
+  public interface IHello{
+    public void hello(String name);
+  }
+
+  //让实现业务逻辑的HelloSpeaker类实现Hello接口
+  public class HelloSpeaker implements IHello{
+    public void hello(String name){
+      System.out.println("hello,"+name);
+    }
+  }
+
+  //日志服务的实现被放到代理类中
+  import java.util.logging.*;
+  public class HelloProxy implements IHello{
+    private Logger logger = Logger.getLonger(this.getClass().getName());
+    private IHello helloObject;
+    //构造函数
+    public HelloProxy(IHello helloObjetc){
+      this.helloObject=helloObject;
+    }
+    public void hello(String name){
+      log("hello method starts...");   //日志服务
+      helloObject.hello(name);         //执行业务逻辑
+      log("hello method starts...");   //日志服务
+    }
+    private void log(String name){
+      logger.log(Level.INFO.msg);
+    }
+  }
+
+  //测试类
+  public class ProxyDemo{
+    public static void main(String[] args){
+      IHello Proxy = new HelloProxy(new HelloSpeaker()); //关注静态代理的两个类如和串联起来的
+      Proxy.hello("justin");
+    } 
+  }
+  ```
+- 动态代理<br>
+  JDK1.3后加入了可协助开发动态处理功能的API等相关类别，**不需要为特定类和方法编写特性的代理类**。使用动态代理可以使得一个处理者（Handller）为各个类服务。
+  ```java
+  //接口同静态代理方式
+  public interface IHello{
+    public void hello(String name);
+  }
+
+  //被代理类同静态代理方式
+  public class HelloSpeaker implements IHello{
+    public void hello(String name){
+      System.out.println("Hello,"+name);
+    }
+  }
+
+  //代理类有固定声明方式
+  import java.lang.reflect.InvocationHandler;
+  import java.lang.reflect.Method;
+  //每一个proxy代理对象都有一个实现InvocationHandler接口实现的Handeler(此处表现为LogHandler),该接口中只有唯一的方法invoke
+  public class LogHandler implements InvocationHandler{
+    private Object sub;
+    public LogHandler(){
+
+    }
+    public LogHandler(Object obj){
+      sub = obj;
+    }
+    //这个invoke方法就是proxy代理对象的实际调用处理器，在这个方法中有所有被代理对象的方法逻辑实现和扩展。
+    //@param proxy:代理对象
+    //@param method:proxy被反射机制用于调用的方法对象
+    //@param agrs:调用方法的参数列表
+    public Object invoke(Object proxy,Method method,Object[] args) throws Throwable{
+      System.out.println("before you do thing");
+      method.invoke(sub,args);
+      System.out.println("before you do thing");
+      return null;
+    }
+  }
+  ```                                                                                                                                                                                  
 # note_src:www.runoob.com
-
-
-
-  
