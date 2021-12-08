@@ -116,6 +116,8 @@
   - 使用@ImportResource加载XML配置文件<br>
     相关注解：<br>
     @ImportResource:指定XML文件位置<br>
+
+    实例：
     - 在项目下新建一个com.itheima.config包，并在该包下新创建一个类MyService，不需要填充
       ```java
       public class MyService{
@@ -126,8 +128,7 @@
       <?xml version="1.0" encoding="UTF-8"?>
       <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-                      http://www.springframework.org/schema/beans/spring-beans.xsd">
+      xsi:schemaLocation="http://www.springframework.org/schema/beanshttp://www.springframework.org/schema/beans/spring-beans.xsd">
       <bean id="myService" class="com.itheima.config.MyService" />
       </beans>
       ```
@@ -139,10 +140,113 @@
       private ApplicationContext applicationContext;
       @Test
       public void icoTest(){
-        System.out.println(applicationContext.containBean())
+        System.out.println(applicationContext.containBean("myService"));
       }
       ```
-  - 使用@Configuration编写自定义配置类
+  - 使用@Configuration编写自定义配置类<br>
+    相关注解：<br>
+    - @Configuration:定义一个配置类<br>
+    - @Bean:进行组件配置
+  
+    实例：<br>
+    - 在现有的项目基础上新建一个类MyConfig，使用@Configuration注解将该类声明一个配置类。
+    ```java
+    @configuration
+    public class MyConfig{
+      @Bean
+      public MyService myService(){
+        return new MyService();
+      }
+    }
+    ```
+    - 在项目启动类上添加的@ImportResource注解注释，执行测试方法
 - Profile多环境配置
   - 使用Profile文件进行多环境配置
   - 使用@Profile注解进行多环境配置
+
+## SpringBoot数据访问
+
+- 概述<br>
+  Spring Boot默认采用整合SpringData的方式统一处理数据访问层，通过添加大量自动配置，引入各种数据访问模板xxxTemplate以及统一的Repository接口，从而达到简化数据访问层的操作。
+- 使用注解方式整合MyBatis<br>
+  - 创建Mapper:@Mapper<br>
+    ```java
+    @Mapper
+    public interface CommentMapper{
+      //查询数据操作
+      @select("SELECT*FROM t_comment WHERE id =#{id}")
+      public Comment findById(Integer id);
+
+      //插入数据操作
+      @Insert("INSERT INTO t_comment(content,author,a_id)"+"values (#{content},#{author},#{aId})")
+      public int insertComment(Comment comment);
+
+      //更新数据操作
+      @Update("UPDATE t_comment SET content=#{content} WHERE id=#{id}")
+      public int updateComment(Comment comment);
+
+      //删除数据操作
+      @Delete("DELETE FROM t_comment WHERE id=#{id}")
+      public int deleteComment(Integer id);
+    }
+    ```
+  - 编写测试方法进行接口方法测试及整合测试
+    ```java
+    @RunWith(SpringRunner.class)
+    @SpringBootTest
+    public class ApplicationTests{
+      @Autowired
+      private CommentMapper commentMapper;
+      @Test
+      public void selectComment(){
+        Comment comment = commentMapper.findById(1);
+        System.out.println(comment);
+        }
+    }
+    ```
+- 使用配置文件方式整合MyBatis
+  - 创建Mapper接口文件：@Mapper
+    ```java
+    @Maaper
+    public interface ArticleMapper{
+      public Article selectArticle(Integer id);
+      public int updateArticle(Article article);
+    }
+    ```
+  - 创建XML映射文件：编写对应的SQL语句
+    ```xml
+    <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"><mapper namespace="com.itheima.mapper.ArticleMapper">
+     <select id="selectArticle" resultMap="articleWithComment">
+       SELECT a.*,c.id c_id,c.content c_content,c.author
+       FROM t_article a,t_comment c
+       WHERE a.id=c.a_id AND a.id = #{id}
+    </select>
+    <update id="updateArticle" parameterType="Article" >
+        UPDATE t_article
+        <set>
+            <if test="title !=null and title !=''">
+                title=#{title},
+            </if>
+            <if test="content !=null and content !=''">
+                content=#{content}
+            </if>
+        </set>
+        WHERE id=#{id}
+    </update>
+    ```
+  - 在全局文件中配置XML映射文件路径以及实体类别名映射路径
+    ```properties
+    # 配置MyBatis的XML配置文件路径
+    mybatis.mapper-locations=clsspath:mapper/*.xml
+    # 配置XML映射文件中指定的实体类别名路径
+    mybatis.type-aliases-package=com.itheima.domain
+    ```
+  - 编写测试方法进行接口方法测试及整合测试
+    ```java
+    @AutoWired
+    private ArticleMapper articleMapper;
+    @Test
+    public void selectArticle(){
+      Article article = articleMapper.selectArticle(1);
+      System.out.println(article);
+    }
