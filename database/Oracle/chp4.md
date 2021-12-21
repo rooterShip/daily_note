@@ -90,5 +90,50 @@ CREATE [TEMPORARY | UNDO] TABLESPACE tablespace_name  #CREATE TABLESPACE my_tbs_
   ALTER DATABASE tablespace_name
   DATAFILE filename
   RESIZE nM;
+
+  # 允许文件自动扩展
+  ALTER DATABASE
+  DATAFILE 'datafilepath'
+  AUTOEXTEND ON NEXT mM MAXSIZE maxM
+
+  # 删除表空间
+  DROP TABLESPACE tablespace_name
+  INCLUDE CONTENTS | INCLUDE CONTENTS AND DATAFILES; #删除对象|删除对象和数据文件
+
+  # 删除数据文件
+  ALTER TABLESPACE tablespace_name
+  DROP DATAFILE 'datafilepath';
   ```
 ## Oracle查看表空间和数据文件信息的方法
+- 查看表空间信息<br>
+  为了便于对表空间进行管理，Oracle提供了一系列与表空间相关的数据字典
+  | 表名 | 注释 |
+  | :----: | :----: |
+  | V$TABLESPACE | 从控制文件中获取的表空间名称和编号|
+  | DBA_TABLESPACE | 所有用户可访问的表空间信息 |
+  | USER_TABLESPACE | 用户可访问的表空间的信息 |
+  | DBA_SEGMENTS | 所有表空间中的段的描述信息 |
+  | USER_SEGEMENT | 用户可访问的表空间中的段的描述信息 |
+  | DBA_EXTENTS | 所有用户可访问的表空间中的数据盘区的信息 |
+  | USER_EXTENTS | 用户可访问的表空间中的数据盘区信息 |
+  | V$DATAFILE | 所有数据文件的信息，包括所属表空间的名称和编号 |
+  | V$TEMPFILE | 所有临时文件的信息，包括所属表空间的名称和编号 |
+  | DBA_DATA_FILES | 所有数据文件及其所属的表空间的信息 |
+  | DBA_TEMP_FIILES | 所有临时文件及其所属的表空间的信息 |
+  | V$TEMP_EXTENT_POOL | 本地管理的临时表空间的缓存信息，使用的临时表空间的状态信息 |
+  | V$TEMP_EXTENT_MAP | 本地管理的临时表空间的所有盘区的信息 |
+  | V$SORT_USER | 用户使用的临时排序段的信息 |
+  | V$SORT_SEGMENT | 例程的每个排序段的信息 |
+
+- 查看数据文件信息<br>
+  可以使用数据字典视图和动态性能视图来查看数据文件的信息
+  | 表名 | 注释 |
+  | :----: | :----: |
+  | DBA_DATA_FILES | 包含数据库中所有数据文件的基本信息 |
+  | DBA_TEMP_FILES | 包含数据库中所有临时数据文件的信息 |
+  | DBA_EXTENTS | 包含所有表空间中已分配的区的描述信息，如区所属的数据文件的文件号等 |
+  | USER_EXTENTS | 包含当前用户所拥有的对象在所有表空间中已分配的区的描述信息 |
+  | DBA_FREE_SPACE | 包含表空间中空闲区的描述信息，如空闲区所属的数据文件的文件号等 |
+  | USER_FREE_SPACE | 包含可被当前用户访问的表空间中空闲区的描述信息 | 
+  | V$DATAFILE | 包含从控制文件中获取的数据文件信息，主要是用于同步的信息 |
+  | V$DATAFILE_HEADER | 包含从数据文件头部获取的信息 |
