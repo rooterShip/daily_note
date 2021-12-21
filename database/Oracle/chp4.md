@@ -17,8 +17,8 @@
 ## Oracle表空间和数据文件的概述
 - 表空间类型<br>
   SYSTEM表空间（系统表空间）<br>
-  TEMP表空间（辅助系统表空间）<br>
-  SYSAUX表空间（临时表空间）<br>
+  TEMP表空间（临时表空间）<br>
+  SYSAUX表空间（辅助系统表空间）<br>
   USERS表空间（用户表空间）<br>
   EXAMPLE表空间（实例表空间）<br>
   UNDOTBS1表空间（撤销表空间）<br>
