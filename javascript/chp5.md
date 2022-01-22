@@ -100,4 +100,64 @@ let s2 = s1.substring(2);
 s1 = null;
 ```
 这种行为让原始值拥有对象的行为，布尔值和数值同理。<br>
-引用类型与原始包装类型的主要区别在于对象的生命周期。在通过new实例化引用类型后，得到的
+引用类型与原始包装类型的主要区别在于对象的生命周期。在通过new实例化引用类型后，得到的实例会在离开作用域时被销毁，而自动创建的原始值包装对象则只存在于访问它的那行代码执行期间。这意味着不能在运行时给原始值添加属性和方法。
+```js
+//第二行代码运行时会临时创建一个string对象，但是在赋值完后，这个对象已经被销毁了，所以第三行代码执行时会为undefined，实质上，第三行代码在调用原始值属性时，是创建了自己的string对象，只不过该对象不含有color属性
+let s1 = "some text";
+s1.color = "red";
+console.log(s1.color); //undefined
+```
+Object构造函数作为一个工厂方法，能够根据传入值的类型返回相应原始值包装类型的实例
+```js
+let obj = new Object("some text");
+console.log(obj instanceof String); //true
+```
+使用new调用原始值包装类型的构造函数，与调用同名的转型函数并不一样
+```js
+let value = "25";
+let number = Number(value); //转型函数
+console.log(typeof number); //"number"
+let obj = new Number(value); //构造函数
+console.log(typeof obj); //"object"
+```
+### Boolean
+Boolean是对应布尔值的引用类型。要创建一个Boolean对象，就使用Boolean构造函数并传入true或false
+```js
+let booleanObject = new Boolean(true);
+```
+所有对象在布尔表达式中都会自动转换为true
+```js
+let falseObject = new Boolean(false);
+let result = falseObject && true;
+console.log(result); //true-- 所有对象在布尔表达式中都会自动转换为true
+
+let falseValue = false;
+result = falseValue && true;
+console.log(result); //false
+```
+Boolean的实例会重写valueOf()方法，返回一个原始值true或false。
+### Number
+Number是对应数值的引用类型。要创建一个Number对象，就使用Number构造函数并传入一个数值。
+```js
+let numberObject = new Number(123);
+```
+与Boolean一样，Number类型重写了valueOf()、toLocalString()和toString()方法。valueOf方法返回Number对象的原始数值，另外两个方法返回会数值字符串。toString()方法可选地接收一个表示基数的参数，并返回相应基数形式的数值字符串
+```js
+let num = 10;
+console.log(num.toString()); //"10"
+console.log(num.toString(2)); //"1010"
+console.log(num.toString(8)); //"12"
+console.log(num.toString(10)); //"10"
+console.log(num.toString(16)); //"a"
+```
+除了继承的方法，Number类型还提供了几个用于将数值格式化为字符串的方法。<br>
+- toFixed()方法返回包含指定小数点位数的数值字符串
+  ```js
+  let num = 10;
+  console.log(num.toFixed(2)); //"10.00"
+  //第二行代码就是隐含创建了对象并在结束时销毁了实例
+  let num = 10.005 //假设与上一段代码不在同一个块内，同一个块内let声明不允许存在冗余
+  console.log(num.toFixed(2)); //"10.01"
+  ```
+- toExponential()方法返回以科学计数法
+
