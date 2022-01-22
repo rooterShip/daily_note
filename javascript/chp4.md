@@ -41,7 +41,7 @@ ECMAScript变量可以包含两种不同类型的数据：原始值和引用值<
 - 传递参数<br>
   ECMAScript中所有函数的参数都是**按值传递**的
   - 原始值：值会被复制到另一个**局部变量**
-  - 引用值：值在内存中的**位置**会被保存在另一个**局部变量**（即使对象是按置传进函数的，还是会通过引用访问对象，但始终不是按引用传递），对于这点个人理解为：ECMAScript中函数的参数必定为值传递，当这个参数为引用值时，将该引用值赋给另一个临时的引用值（局部变量），这两个值也同时指向同一个对象，所以一个对对象更改，另一个也会更改。但两者终究不是同一个值即非引用传递，
+  - 引用值：值在内存中的**位置**会被保存在另一个**局部变量**（即使对象是按值传进函数的，还是会通过引用访问对象，但始终不是按引用传递），对于这点个人理解为：ECMAScript中函数的参数必定为值传递，当这个参数为引用值时，将该引用值赋给另一个临时的引用值（局部变量），这两个值也同时指向同一个对象，所以一个对对象更改，另一个也会更改。但两者终究不是同一个值即非引用传递，
   ```js
   //原始值为参数
   function addTen(num){
@@ -64,16 +64,15 @@ ECMAScript变量可以包含两种不同类型的数据：原始值和引用值<
   setName(person);
   console.log(person.name); //'Nichols'
 
-  //
   function setName(obj){
     obj.name = 'Nicholas';
     let obj = new Object();
     obj.name = 'Greg';
-
-    let person = new Person();
-    setName(person);
-    obj.name = 'Greg';
   }
+
+  let person = new Object();
+  setName(person);
+  console.log(person.name); //"Nicholas"
   ```
 - 确定类型<br>
   typeof操作符适合用来判断一个变量是否为原始类型，当一个变量是引用类型的时候，typeof只能返回object，并不能返回具体的object。<br>
