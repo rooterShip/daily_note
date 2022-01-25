@@ -135,7 +135,7 @@ let falseValue = false;
 result = falseValue && true;
 console.log(result); //false
 ```
-Boolean的实例会重写valueOf()方法，返回一个原始值true或false。
+Boolean的实例会重写valueOf()方法，返回一个原始值true或false。toString()方法被调用时也会被覆盖，返回字符串"true"或"false"。
 ### Number
 Number是对应数值的引用类型。要创建一个Number对象，就使用Number构造函数并传入一个数值。
 ```js
@@ -160,4 +160,28 @@ console.log(num.toString(16)); //"a"
   console.log(num.toFixed(2)); //"10.01"
   ```
 - toExponential()方法返回以科学计数法
+  ```js
+  let num = 10;
+  console.log(num.toExponential(1)); //"1.0e+1"
+  ```
+- toPrecision()方法会根据情况返回最合理的输出结果，可能是固定长度，也可能是科学计数法形式。
+  ```js
+  let num = 99;
+  console.log(num.toPrecision(1)); //"1e+2"
+  console.log(num.toPrecision(2)); //"99"
+  console.log(num.toPrecision(3)); //"99.0"
+  ```
+### String
+String是对应字符串的引用类型。要创建一个String对象，使用String构造函数并传入一个数值
+```js
+let stringObject = new String("hello world")
+```
+String对象的方法可以在所有字符串原始值上调用。3个继承方法valueOf()、toLocalString()和toString()都返回对象的原始字符串值。<br>
+每个String对象都有一个length属性，表示字符串中字符的数量。
+```js
+let stringValue = "hello word";
+console.log(stringValue.length);//11 
+```
+
+  
 
