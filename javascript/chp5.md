@@ -181,7 +181,65 @@ String对象的方法可以在所有字符串原始值上调用。3个继承方�
 ```js
 let stringValue = "hello word";
 console.log(stringValue.length);//11 
+// 即使字符串中包含双字节字符（而不是单字节的ASCII字符），也仍然会按单字符来计数。
 ```
+- JavaScript字符
+  JavaScript字符串由16位码元（code unit）组成。对多数字符来说，每16位码元对应一个字符
+  ```js
+  ler message = "abcde";
+  console.log(message.length); //5
+  ```
+  此外，charAt()方法返回给定索引位置的字符，由传给方法的整数参数指定。具体来说，这个方法查找指定索引位置的16位码元，并返回该码元对应的字符：
+  ```js
+  let message = "abcde"
+  console.log(message.charAt(2)); //"c"
+  ```
+- 字符串操作方法
+  - concat()(相当于“+”操作)
+  ```js
+  let stringValue = "hello ";
+  let result = stringValue.concat("world");
+
+  console.log(result); //"hello world"
+  console.log(stringValue); //"hello"
+  ```
+  concat()方法可以接收任意多个参数，因此可以一次性拼接多个字符串。
+- slice()、substr()和substring()<br>
+  返回调用它们的字符串的一个子字符串，并且都接收一个或两个参数，第一个参数表示子字符串开始的位置，第二个参数表示子字符串结束的位置<br>
+  ```js
+  //参数为正时
+  let stringValue = "hello world";
+  console.log(stringValue.slice(3)); //"lo world"---省略第二个参数表示提取到字符串末尾
+  console.log(stringValue.substring(3)); //"lo world"
+  console.log(stringValue.substr(3)); //"lo world"
+  console.log(stringValue.slice(3,7)); //"lo w"
+  console.log(stringValue.substring(3,7)); //"lo w"--对于slice、substring而言，第二个参数表示结束时的位置
+  console.log(stringValue.substr(3,7)); //"lo world"--对于substr而言，第二个参数表示字串中包含的字符个数
+
+  //参数为负时
+  let stringValue = "hello world";
+  console.log(stringValue.slice(-3)); //"rld"
+  console.log(stringValue.substring(-3)); //hello world"
+  console.log(stringValue.substr(-3)); //"rld"
+  console.log(stringValue.slice(3,-4)); //"lo w
+  console.log(stringValue.substring(3, -4)); //"hel"
+  console.log(stringValue.substr(3,-4)); //""(empty string)
+  //slice()参数将所有负参数值加上字符串长度得到正值，按照之前正值规则进行计算
+  //substr()方法将第一个负参数值加上字符串长度得到成正值，按照之前正值的规则进行计算，将第二个负参数值转换为0
+  //substring()方法将所有负值参数都转换为0
+  ```
+- indexOf()和lastIndexOf()<br>
+  这两个方法从字符串中搜索传入的字符串，并返回位置（如果没找到，则返回-1），两者的区别在于，indexOf()方法从字符串开头开始查找字符串，而lastIndexOf()方法从字符串末尾开始查找字符串。
+  ```js
+  let stringValue = "hello world";
+  console.log(stringValue.indexOf("o")); //4
+  console.log(stringValue.indexof("o")); //7
+
+
+  //当这两个函数接收第二个参数时表示从第二个参数表示的位置开始查找
+  console.log(stringValue.indexOf("o",6)); //7
+  console.log(stringValue.indexof("o",6)); //4
+  ```
 
   
 
