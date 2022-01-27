@@ -196,50 +196,166 @@ console.log(stringValue.length);//11
   ```
 - 字符串操作方法
   - concat()(相当于“+”操作)
-  ```js
-  let stringValue = "hello ";
-  let result = stringValue.concat("world");
+    ```js
+    let stringValue = "hello ";
+    let result = stringValue.concat("world");
 
-  console.log(result); //"hello world"
-  console.log(stringValue); //"hello"
-  ```
-  concat()方法可以接收任意多个参数，因此可以一次性拼接多个字符串。
-- slice()、substr()和substring()<br>
+    console.log(result); //"hello world"
+    console.log(stringValue); //"hello"
+    ```
+    concat()方法可以接收任意多个参数，因此可以一次性拼接多个字符串。
+  - slice()、substr()和substring()<br>
   返回调用它们的字符串的一个子字符串，并且都接收一个或两个参数，第一个参数表示子字符串开始的位置，第二个参数表示子字符串结束的位置<br>
-  ```js
-  //参数为正时
-  let stringValue = "hello world";
-  console.log(stringValue.slice(3)); //"lo world"---省略第二个参数表示提取到字符串末尾
-  console.log(stringValue.substring(3)); //"lo world"
-  console.log(stringValue.substr(3)); //"lo world"
-  console.log(stringValue.slice(3,7)); //"lo w"
-  console.log(stringValue.substring(3,7)); //"lo w"--对于slice、substring而言，第二个参数表示结束时的位置
-  console.log(stringValue.substr(3,7)); //"lo world"--对于substr而言，第二个参数表示字串中包含的字符个数
+    ```js
+    //参数为正时
+    let stringValue = "hello world";
+    console.log(stringValue.slice(3)); //"lo world"---省略第二个参数表示提取到字符串末尾
+    console.log(stringValue.substring(3)); //"lo world"
+    console.log(stringValue.substr(3)); //"lo world"
+    console.log(stringValue.slice(3,7)); //"lo w"
+    console.log(stringValue.substring(3,7)); //"lo w"--对于slice、substring而言，第二个参数表示结束时的位置
+    console.log(stringValue.substr(3,7)); //"lo world"--对于substr而言，第二个参数表示字串中包含的字符个数
 
-  //参数为负时
-  let stringValue = "hello world";
-  console.log(stringValue.slice(-3)); //"rld"
-  console.log(stringValue.substring(-3)); //hello world"
-  console.log(stringValue.substr(-3)); //"rld"
-  console.log(stringValue.slice(3,-4)); //"lo w
-  console.log(stringValue.substring(3, -4)); //"hel"
-  console.log(stringValue.substr(3,-4)); //""(empty string)
-  //slice()参数将所有负参数值加上字符串长度得到正值，按照之前正值规则进行计算
-  //substr()方法将第一个负参数值加上字符串长度得到成正值，按照之前正值的规则进行计算，将第二个负参数值转换为0
-  //substring()方法将所有负值参数都转换为0
-  ```
-- indexOf()和lastIndexOf()<br>
-  这两个方法从字符串中搜索传入的字符串，并返回位置（如果没找到，则返回-1），两者的区别在于，indexOf()方法从字符串开头开始查找字符串，而lastIndexOf()方法从字符串末尾开始查找字符串。
-  ```js
-  let stringValue = "hello world";
-  console.log(stringValue.indexOf("o")); //4
-  console.log(stringValue.indexof("o")); //7
+    //参数为负时
+    let stringValue = "hello world";
+    console.log(stringValue.slice(-3)); //"rld"
+    console.log(stringValue.substring(-3)); //hello world"
+    console.log(stringValue.substr(-3)); //"rld"
+    console.log(stringValue.slice(3,-4)); //"lo w
+    console.log(stringValue.substring(3, -4)); //"hel"
+    console.log(stringValue.substr(3,-4)); //""(empty string)
+    //slice()参数将所有负参数值加上字符串长度得到正值，按照之前正值规则进行计算
+    //substr()方法将第一个负参数值加上字符串长度得到成正值，按照之前正值的规则进行计算，将第二个负参数值转换为0
+    //substring()方法将所有负值参数都转换为0
+    ```
+  - indexOf()和lastIndexOf()--字符串位置方法<br>
+    这两个方法从字符串中搜索传入的字符串，并返回位置（如果没找到，则返回-1），两者的区别在于，indexOf()方法从字符串开头开始查找字符串，而lastIndexOf()方法从字符串末尾开始查找字符串。
+    ```js
+    let stringValue = "hello world";
+    console.log(stringValue.indexOf("o")); //4
+    console.log(stringValue.indexof("o")); //7
 
 
-  //当这两个函数接收第二个参数时表示从第二个参数表示的位置开始查找
-  console.log(stringValue.indexOf("o",6)); //7
-  console.log(stringValue.indexof("o",6)); //4
-  ```
+    //当这两个函数接收第二个参数时表示从第二个参数表示的位置开始查找
+    console.log(stringValue.indexOf("o",6)); //7
+    console.log(stringValue.indexof("o",6)); //4
+    ```
+  - startsWith()、endsWith()、includes()--字符串包含方法<br>
+    startsWith()检查开始于索引0的匹配项，endsWith检查开始于索引(string.length - substring.length)的匹配项，includes()检查整个字符串
+    ```js
+    let message = "foobarbaz";
+    console.log(message.startsWith("foo")); //true
+    console.log(message.startsWith("bar")); //false
+    
+    console.log(message.endsWith("baz")); //false
+    console.log(message.endsWith("bar")); //true
 
-  
+    console.log(message.includes("baz")); //true
+    console.log(message.includes("qux")); //false
+    ```
+    startsWith()和includes()方法接收可选的第二个参数，表示开始搜索的位置。如果传入第二个参数，则意味着这连个方法会从指定位置向着字符串末尾搜索，忽略该位置之前的所有字符。
+    ```js
+    let message = "foobarbaz";
+
+    console.log(message.startsWith("foo")); //true
+    console.log(message.startsWith("foo",1)); //false
+
+    console.log(message.includes("bar")); //true
+    console.log(message.includes("bar",4)); //false
+    ```
+    endsWith()方法接收可选的第二个参数，表示应该当作字符串末尾的位置。
+    ```js
+    let message = "foobarbaz";
+
+    console.log(message.endsWith("bar")); //false
+    console.log(message.endsWith("bar",6)); //true
+    ```
+  - trim()--去除前后所有空格符，再返回结果<br>
+    这个方法创建字符串的一个**副本**
+    ```js
+    let stringValue = "  hello world  ";
+    let trimmedStringValue = stringValue.trim();
+    console.log(stringValue); //"  hello world  "
+    console.log(trimmedStringValue); //"hello world"
+    ```
+    **由于trim()返回的是字符串的副本，因此原始字符串不受影响，即原本的前、后空格符都会保留。** 另外，trimLeft()和trimRight()方法分别用于从字符串开始和末尾清理空格符。
+  - repeat()方法<br>
+    ECMAScript在所有字符串上都提供了repeat()方法。这个方法接收一个整数参数，表示要将字符串复制多少次，然后返回拼接所有副本后的结果。
+    ```js
+    let stringValue = "na";
+    console.log(stringValue.repeat(16) + "batman");
+    // nanananananananananananananananabatman
+    ```
+  - padStart()和padEnd()方法<br>
+    padStart()和padEnd()方法会复制字符串，如果小于指定长度，则在相应一边填充字符，直至满足长度条件。这两个方法的第一个参数是长度，第二个参数是可选的填充字符串，默认为空格
+    ```js
+    let stringValue = "foo";
+
+    console.log(stringValue.padStart(6)); //"   foo"
+    console.log(stringValue.padStart(9,".")); //"......foo"
+
+    console.log(stringValue.padEnd(6)); //"foo   "
+    console.log(stringValue.padEnd(9,".")); //"foo......"
+    ```
+   可选的第二个参数并不限于一个字符。如果提供了多个字符的字符串，则会将其拼接并截断以匹配指定长度。此外，如果长度小于或等于字符串长度，则会返回原始字符串。
+   ```js
+   let stringValue = "foo";
+   console.log(stringValue.padStart(8,"bar")); //"barbafoo"
+   console.log(stringValue.padStart(2)); //"foo"
+
+   console.log(stringValue.padEnd(8,"bar")) //"foobarba"
+   console.log(stringValue.padEnd(2)) //"foo
+   ```
+   - 字符串迭代与解构<br>
+     - iteration<br>
+       iteration为迭代器（遍历器），其作用为给不同的数据结构提供统一的遍历访问机制，这种机制可以使得数据结构里的成员按照顺序依次被遍历访问，常见的有数组、map的遍历
+       ```js
+       const arr = ['a','b','c'];
+       for(let i of arr){
+         console.log(i); //a b c
+       } 
+
+       const map = new map[[1,'x'],[2,'y'],[3,'z']];
+       for(let j of map){
+         console.log(j); //[1,'x'],[2,'y'],[3,'z']
+       }
+       ```
+       for-of循环的背后调用iteration，由于数组对象上部署了iteration属性，数组是一个可迭代对象，因此数组可以被for-of遍历
+      - iteration工作原理<br>
+        iteration遍历的时候会先生成一个**指针对象**，指向当前数据结构的起始位置（即iteration本质上就是指针对象），这个对象里有一个next方法，然后调用该**next**方法，移动指针使得指针指向数据结构中的第一个元素，每调用一次next方法，指针就指向数据结构里的下一个元素，不断的调用next方法实现遍历元素的效果。另外每一次调用next方法，都会返回数据结构的当前成员的信息，具体来说，就是返回一个包含**value**和**done**两个属性的对象，其中value属性是当前成员的值，done属性是一个布尔值，表示遍历是否结束，没有结束返回false，结束返回为true。
+      - 原生及自定义的iterator接口<br>
+        在javascript中原生具备iterator接口的数据结构有：<br>
+        - Array
+        - Map
+        - Set
+        - String
+        - TypedArray
+        - 函数的arguments对象
+        - NodeList对象、
+        
+        当我们使用for-of循环遍历这些数据结构时，该循环会自动去寻找iterator接口并执行遍历操作，一种数据结构只要部署了Iterator接口，我们就称这种数据结构为“可遍历的（iterable）”<br>
+        ES6规定，默认的iterator接口部署在数据结构的Symbol.iterator属性，Symbol.iterator属性本身是一个函数，就是当前数据结构默认的遍历器生成函数，执行这个函数，就会返回一个带有next方法的遍历器对象。属性名Symbol.iterator是一个表达式，返回Symbol对象的iterator属性，这是一个预定义好的、类型为Symbol的特殊值，所以要放在**方括号**内。
+      - 字符串手动迭代
+        ```js
+        let message = "abc";
+        let stringIterator = message[Symbol.iterator]();
+        // stringIterator为遍历器对象
+        console.log(stringIterator.next()); //{value:"a",done:false}
+        console.log(stringIterator.next()); //{value:"b",done:false}
+        console.log(stringIterator.next()); //{value:"c",done:false}
+        console.log(stringIterator.next()); //{value:"undefined",done:trur}
+        ```
+      - 在for-of循环中可以通过迭代器访问每个字符
+        ```js
+        for(const c of "abcde"){  //普通迭代不能使用const声明
+          console.log(c);
+        } // a b c d e
+        ```
+      - 解构字符串
+        ```js
+        let message = "abcde";
+        console.log([...message]); //["a","b","c","d","e"]
+
+
+
 
