@@ -297,15 +297,15 @@ console.log(stringValue.length);//11
     console.log(stringValue.padEnd(6)); //"foo   "
     console.log(stringValue.padEnd(9,".")); //"foo......"
     ```
-   可选的第二个参数并不限于一个字符。如果提供了多个字符的字符串，则会将其拼接并截断以匹配指定长度。此外，如果长度小于或等于字符串长度，则会返回原始字符串。
-   ```js
-   let stringValue = "foo";
-   console.log(stringValue.padStart(8,"bar")); //"barbafoo"
-   console.log(stringValue.padStart(2)); //"foo"
+    可选的第二个参数并不限于一个字符。如果提供了多个字符的字符串，则会将其拼接并截断以匹配指定长度。此外，如果长度小于或等于字符串长度，则会返回原始字符串。
+    ```js
+    let stringValue = "foo";
+    console.log(stringValue.padStart(8,"bar")); //"barbafoo"
+    console.log(stringValue.padStart(2)); //"foo"
 
-   console.log(stringValue.padEnd(8,"bar")) //"foobarba"
-   console.log(stringValue.padEnd(2)) //"foo
-   ```
+    console.log(stringValue.padEnd(8,"bar")) //"foobarba"
+    console.log(stringValue.padEnd(2)) //"foo
+    ```
    - 字符串迭代与解构<br>
      - iteration<br>
        iteration为迭代器（遍历器），其作用为给不同的数据结构提供统一的遍历访问机制，这种机制可以使得数据结构里的成员按照顺序依次被遍历访问，常见的有数组、map的遍历
@@ -355,6 +355,38 @@ console.log(stringValue.length);//11
         ```js
         let message = "abcde";
         console.log([...message]); //["a","b","c","d","e"]
+        ```
+  - toLowerCase()、toLocaleLowerCase()、toUpperCase()、toLocaleUpperCase()--字符串大小写转换<br>
+    toLowerCase()和toLocaleCase()方法同java.lang.String中的方法。toLocaleLowerCase()和toLocaleUpperCase()方法旨在于基于特定地区实现。在很多地区，地区特定的方法与通用的方法是一样的，但在少数语言中（如土耳其语），Unicode大小写转换需应用特殊规则，要使用地区特定的方法才能实现正确转换。
+      ```js
+      let stringValue = "hello world";
+      console.log(stringValue.toLocaleUpperCase()); //"HELLO WORLD"
+      console.log(stringValue.toUpperCase()); //"HELLO WORLD"
+      console.log(strirngValue.toLocaleLowerCase()); //"hello world"
+      console.log(stringValue.toLowerCase()); //"hello world"
+      // 如果不知道代码涉及什么语言，则最好使用地区特定的转换方法
+      ```
+  - match()--字符串模式匹配方法<br>
+  这个方法本质上跟RegExp对象的exec()方法相同。match()方法接收一个参数，可以是一个正则表达式字符串，也可以是一个RegExp对象。
+    ```js
+    let text = "cat,bat,sat,fat";
+    let pattern = /.at/;
+
+    let matches = text.match(pattern);
+    //等价于pattern.exec(text)
+    console.log(matches.index); //0
+    console.log(matches[0]); //"cat"
+    console.log(pattern.lastIndex); //0
+    ```
+  - search()<br>
+    这个方法唯一的参数与match()方法一样：正则表达式字符串或RegExp对象。这个方法返回模式第一个匹配的位置索引，如果没找到则返回-1.始终从字符串开头向后匹配模式
+    ```js
+    let text = "cat,bat,sat,fat";
+    let pos = text.search(/at/);
+    console.log(pos); //1
+    ```
+    
+
 
 
 
