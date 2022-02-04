@@ -385,7 +385,57 @@ console.log(stringValue.length);//11
     let pos = text.search(/at/);
     console.log(pos); //1
     ```
-    
+  - replace()<br>
+    为了简化子字符串替换操作，ECMAScript提供了replace()方法，这个方法接收两个参数，第一个参数可以是一个RegExp对象或第一个字符串（这个字符串不会转换为正则表达式），第二个参数可以是一个字符串或一个函数，如果第一个参数是字符串，那么只会替换第一个子字符串。要想替换所有子字符串，第一个参数必须为正则表达式且带全局标记。
+    ```js
+    let text = "cat, bat, sat, fat";
+    let result = text.replace("at","ond");
+    console.log(result); //"cond,bat,sond,fond"
+    console.log(text); //"cat, bat, sat, fat"--replace函数不会改变原来的字符串
+
+    result = text.replace(/at/g,"ond");
+    console.log(result); //"cond,bond,sond,fond"
+    ```
+    第二个参数是字符串的情况下，有几个特殊的字符序列，可以用来插入正则表达式操作的值。
+    | 字符序列 | 替换文本 |
+    | :---:| :---:|
+    |$$|\$（这里前面的$可以理解成转义字符）|
+    |$&|匹配整个模式的子字符串|
+    |$`|位于匹配子串左侧的文本|
+    |$'|位于匹配字串右侧的文本|
+    |$1、$2、...$99|与regexp中的第1到第99个子表达式相匹配的文本（用括号来分隔不同捕获组）
+    ```js
+      let text = "cat,bat,sat,fat";
+      result = text.replace(/(.at)/g, "word($1)");
+      console.log(result); //word(cat),word(bat),word(sat),word(fat)
+    ```
+    replace()的第二个参数可以是一个函数。在只有一个匹配项时，这个函数会收到三个参数：与整个模式匹配的字符串、匹配项在字符串中的开始位置，以及整个字符串。在有多个捕获组的情况下，每个匹配捕获组的字符串也会作为参数传给这个函数，但最后两个参数还是与整个模式匹配的开始位置和原始字符串。这个函数应该返回一个字符串，表示应该把匹配项替换成什么。使用函数作为第二个参数可以更细致地控制替换过程。
+    ```js
+    function htmlEscape(text){
+      return text.replace(/[<>"&]/g,dunction(match,pos,originalText){
+        switch(match){
+          case "<":
+            return "&lt;";
+          case ">":
+            return "&gt;";
+          case "&":
+            return "&amp;";
+          case "\"":
+            return "&quot;";
+        }
+      });
+    }
+
+    console.log(htmlEscape("<p class=\"greeting\">Hello world!</p>"));
+    ```
+- split()<br>
+  这个方法会根据传入的分隔符将字符串拆分成数组。作为分隔符的参数可以是字符串，也可以是RegExp对象（字符串分隔符不会被这个方法当成正则表达式）还可以传入第二个参数，即数组大小，确保返回的数组不会超过指定大小。
+  ```js
+  let colorText = "red,blue,green,yellow";
+  let colors1 = colorText.split(",");//["red","blue"."green","yellow"]
+  let colors2 = colorText.split(",",2);//["red","blue"]
+  let colors3 = colorText.split(/[^,]+/);//["", ",", ",", ",", ""]
+  ```
 
 
 
