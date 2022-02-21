@@ -270,6 +270,7 @@ ECMAScript变量是松散类型的--变量可以用于保存任何类型的数�
     let num6 = parseInt("0xf"); //15
     let num7 = pasrseInt("0xAF", 16); //175，第二个值为指定底数（进制数）
 
+
     let num7 = pasrseInt("AF", 16); //175
     let num7 = pasrseInt("AF"); //NaN
     ```
