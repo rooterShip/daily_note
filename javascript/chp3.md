@@ -302,7 +302,7 @@ ECMAScript变量是松散类型的--变量可以用于保存任何类型的数�
     | \f | 换页 |
     | \\\ | 反斜杠(\\) |
     | \\" | 双引号（"）|
-    | \\` | 反引号（`）|
+    | \\\` | 反引号（`）|
     | \\' |单引号（'），在字符串以单引号标示时使用，例如'He said, \'hey.\''|
     | \\xnn | 以十六进制编码 nn 表示的字符（其中 n 是十六进制数字 0~F），例如\x41 等于"A"|
     | \\unnnn | 以十六进制编码 nnnn 表示的 Unicode字符（其中 n 是十六进制数字 0~F），例如\u03a3 等于希腊字 符"Σ"|
@@ -398,7 +398,7 @@ ECMAScript变量是松散类型的--变量可以用于保存任何类型的数�
 
     //可以采用：
     let mySymbol = Symbol();
-    let = myWrappedSymbol = Object(mySymbol);
+    let myWrappedSymbol = Object(mySymbol);
     conaole.log(typeof myWrappedSymbol); //object
     ```
   - 使用全局符号注册表<br>
