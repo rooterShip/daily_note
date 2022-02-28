@@ -2,7 +2,7 @@
  * @Author: Rooter
  * @Date: 2022-02-26 17:10:29
  * @LastEditors: Rooter
- * @LastEditTime: 2022-02-26 17:50:50
+ * @LastEditTime: 2022-02-28 22:38:24
 -->
 # 集合引用类型
 ## Object
@@ -40,3 +40,13 @@ Object是ECMAScript中最常用的类型之一，虽然Object的实例没有多�
   ```
 ## Array
 >ECMAScript数组跟其他变成语言的数组有很大区别：跟其他语言中的数组一样，ECMAScript数组也是一组有序的数据，但跟其他不同的时，数组中每个槽位可以存储任意类型的数据。这意味这可以创建一个数组，它的第一个元素时字符串，第二个元素时数值。且ECMAScript数组也是动态大小的，会随着数据添加而自动增长。
+### 创建数组
+- 使用Array构造函数
+  ```js
+  let colors = new Array();
+  ```
+  如果知道数组中元素的数量那么可以给构造函数传入一个值，然后length属性就会被自动创建并设置为这个值。
+  ```js
+  let color = new Array(20); //创建一个初始length为20的数组
+  ```
+- 使用数组字面量
