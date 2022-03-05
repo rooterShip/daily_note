@@ -2,7 +2,7 @@
  * @Author: Rooter
  * @Date: 2022-02-26 17:10:29
  * @LastEditors: Rooter
- * @LastEditTime: 2022-03-03 22:39:12
+ * @LastEditTime: 2022-03-05 22:41:25
 -->
 # 集合引用类型
 ## Object
@@ -86,7 +86,6 @@ Object是ECMAScript中最常用的类型之一，虽然Object的实例没有多�
   alert(a1 === a2); //false
    
    //可以使用任何可迭代对象
-   const iter = {
-     
+   const iter {
    }
   ```
