@@ -4,7 +4,7 @@ import java.util.Arrays;
  * @Author: Rooter
  * @Date: 2022-03-06 17:18:47
  * @LastEditors: Rooter
- * @LastEditTime: 2022-03-06 18:23:24
+ * @LastEditTime: 2022-03-06 21:45:14
  */
 /**
  * 给定一个无序的数组 nums，返回 数组在排序之后，相邻元素之间最大的差值 。如果数组元素个数小于 2，则返回 0 。
@@ -15,6 +15,9 @@ import java.util.Arrays;
  * 
  * solution:此题我利用java库函数sort解法，时间复杂度为(nlogn)并不符合题意，但在题目给的数据范围内起始性能并不差
  * 标准解法应为桶排序等。
+ * 
+ * 桶排序：设长度为 N 的数组中最大值为 max,min，则不难发现相邻数字的最大间距不会小于
+ *  (max-min)/(N-1)(向上取整)，元素之间的最大间距一定不会出现在某个桶的内部，而一定会出现在不同桶当中。
  */
 public class Maxmium{
     public static int maxmium(int[] nums){
