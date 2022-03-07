@@ -2,7 +2,7 @@
  * @Author: Rooter
  * @Date: 2022-03-02 18:40:56
  * @LastEditors: Rooter
- * @LastEditTime: 2022-03-04 22:25:37
+ * @LastEditTime: 2022-03-07 21:42:23
  */
 /**
  * 给定单个链表的头 head ，使用 插入排序 对链表进行排序，并返回 排序后链表的头 。
@@ -35,7 +35,7 @@ public class InsertionListSort {
                  curr = lastSorted.next;
              }
          }
-         return dummyHead.next; //不能是head只能是dummyHead.next，待解决
+         return dummyHead.next; //不能是head只能是dummyHead.next，待解决.
     }
     public static void main(String[] args) {
 
