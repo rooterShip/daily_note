@@ -436,8 +436,121 @@ console.log(stringValue.length);//11
   let colors2 = colorText.split(",",2);//["red","blue"]
   let colors3 = colorText.split(/[^,]+/);//["", ",", ",", ",", ""]
   ```
+- localeCompare()<br>
+  这个方法比较两个字符串，结果返回-1时说明字符串排在**字符串参数前面**，结果返回0说明字符串与字符串参数相等。结果返回1说明字符串排在**字符串参数后面**。
+  ```js
+  let stringValue = "yello";
+  console.log(stringValue.localeCompare("brick")); //1
+  console.log(stringValue.localeCompare("yello")); //0
+  console.log(stringValue.localeCompare("zoo")); //-1
+  ```
+- HTML方法
+  这种方法能使用JavaScript动态生成HTML标签（现在已经基本不适用）
+  |方法|输出|
+  |:---:|:---:|
+  |big()|\<big>*string*\</big>|
+  |bold()|\<b>*string*\<b>|
 
+## 单例内置对象 
+>ECMA-262对内置对象的定义时“任何由ECMAScript实现提供、与宿主环境无关，并在ECMAScript程序开始执行时就存在的对象。”因此开发者不用显示地实例化内置对象，Object、Array和String都为内置对象
+### Global
+Global对象是ECMAScript中最特别的对象，因为代码不会显示地访问它。它所针对的是不属于任何对象的属性和方法。事实上，不存在全局变量或全局函数这种东西，在全局作用域中定义的变量和函数都会编程Global对象的属性。isNaN()、isFinite()、parseInt()和parseFloat()都为Global对象的方法。
+- URL编码方法<br>
+  encodeURL()和encodeURLComponent()方法用于编码统一资源标识符（URL），以便传给浏览器。有效的URL不能包含某些字符，比如空格。使用URL编码方法来编码URL可以让浏览器能够理解他们，同时又以特殊的UTF-8编码替换掉所有无效字符。<br>
+  encodeURL()方法用于对整个URL进行编码，而encodeURLComponent()方法用于编码URL中单独的组件。这两个方法的主要区别是，encodeURL()不会编码属于URL组件的特殊字符，比如冒号，斜杠，问号，井号等，而encodeURLComponent()会编码它发现的所有非标准字符。
+- eval()<br>
+  该方法充当一个完整的ECMAScript解释器，它接收一个参数，如果参数是表达式，则eval()计算表达式，如果参数是一个或多个javascript语句，则eval执行语句。特性：eval()参数字符串中的代码可以访问外部代码中的变量（给计算表达式提供前提），在非严格模式下，也可以将参数字符串代码中新建的变量暴露给外部代码。
+  ```js
+  let msg = "hello world";
+  eval("console.log(msg)"); //"hello world"
+  ```
+- Global对象属性
+  |属性|说明|
+  |:----:|:----|
+  |undefined|特殊值undefined|
+  |NaN|特殊值NaN|
+  |Infinity|特殊值Infinity（无穷数）|
+  |Object|Object的构造函数|
+  |Array|Array的构造函数|
+  |Function|Function的构造函数|
+  |Boolean|Boolean的构造函数|
+  |String|String的构造函数|
+  |Number|Number的构造函数|
+  |Date|Date的构造函数|
+  |RegExp|RegExp的构造函数|
+  |Symbol|Symbol的伪构造函数|
+  |Error|Error的伪构造函数|
+  |EvalError|EvalError的构造函数|
+- window对象
+  尽管ECMA-262没有规定直接访问Global对象的方式，但浏览器将window对象实现为Global对象的代理。因此，所有全局作用域中声明的变量和函数都变成了window的属性
+  ```js
+  var color = "red";
 
+  function sayColor(){
+    console.log(window.color);
+  }
+  window.sayColor(); //"red"
+  ```
+  另一种获取Global对象的方式是使用如下的代码：
+  ```js
+  let global = function(){
+    return this;
+  }();
+  ```
+  这段代码创建一个立即调用的函数表达式，返回了this的值。当一个函数在没有明确指定this值的情况下执行时，this值等于Global对象。因此，调用一个简单返回this的函数是在任何执行上下文中获取Global对象的通用方式。
+### Math
+>ECMAScript提供了Math对象作为保存数学公式、信息和计算的地方。Math对象提供了一些辅助计算的属性和方法。
+tips:Math对象上提供的计算要比在javascript实现的快得多，因为在Math对象上的计算使用了JavaScript引擎中更高效的实现和处理器指令。但使用Math计算的问题是精度会因浏览器、操作系统、指令集和硬件而异。
+- Math对象属性
+  >Math对象有一些属性，主要用于保存数学中的一些特殊值。
 
+  |属性|说明|
+  |:----:|:----:|
+  |Math.E|自然对数的基数e的值|
+  |Math.LN2|2为底数的自然对数|
+  |Math.LN10|10为底数的自然对数|
+  |Math.LOG2E|以2为底e的对数|
+  |Math.LOG10E|以10为底的e的对数|
+  |Math.PI| $\pi$ 的值|
+  |Math.SQRT1_2|1/2的平方根|
+  |Math.SQRT2|2的平方根|
+- min()和max()
+  Math对象也提供了很多辅助执行简单或复杂数学计算的方法。
+  ```js
+  let max = Math.max(2,4,6,7,1);
+  console.log(max); //7
 
+  let min = Math.min(2,4,6,7,1);
+  console.log(min); //1
+  ```
+- 舍入方法
+  Math.ceil()始终向上舍入为最接近的整数
+  Math.round()执行四舍五入
+  Math.fround()返回数值最接近的单精度（32位）浮点数表示
+  Math.floor()始终向下舍入为最接近的整数
+  ```js
+  console.log(Math.ceil(25.9)); //26
+  console.log(Math.ceil(25.5)); //26
+  console.log(Math.ceil(25.1)); //26
 
+  console.log(Math.round(25.9)); //26
+  console.log(Math.round(25.5)); //26
+  console.log(Math.round(25.1)); //25
+
+  console.log(Math.fround(0.4)); //0.400000005960465
+  console.log(Math.fround(0.5)); //0.5
+  console.log(Math.fround(25.9)); //25.899999618
+
+  console.log(Math.floor(25.9)); //25
+  console.log(Math.floor(25.5)); //25
+  console.log(Math.floor(25.1)); //25
+  ```
+- random()
+  Math.random()方法返回一个0-1范围内的随机数，其中包含0但不包含1.对于希望显示随机名言或随机新闻的网页，整个方法是非常方便的。<br>
+  可以基于如下公式使用Math.random()从一组整数中随机选择一个数<br>
+  ```js
+  number = Math.floor(Math.random() * total_number_of_choices + first_possible_value)
+  //total_number_of_choices:表示可选总数，如果是1-10即为10，如果是2-10即为9
+  //first_possible_value:表示起始值（最小可能的值）如果是1-10即为1
+  ```
+  
