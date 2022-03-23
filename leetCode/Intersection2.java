@@ -2,7 +2,7 @@
  * @Author: Rooter
  * @Date: 2022-03-21 22:24:09
  * @LastEditors: Rooter
- * @LastEditTime: 2022-03-21 22:24:10
+ * @LastEditTime: 2022-03-23 22:07:00
  */
 /**
  * 给你两个整数数组 nums1 和 nums2 ，请你以数组形式返回两数组的交集。返回结果中每个元素出现的次数，
@@ -15,5 +15,7 @@
  * 输出：[4,9]
  */
 public class Intersection2 {
-    
+    public static void main(String[] args) {
+        
+    }
 }
