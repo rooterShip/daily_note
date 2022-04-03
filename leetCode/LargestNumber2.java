@@ -15,5 +15,7 @@
  * 输出："9534330"
  */
 public class LargestNumber2 {
-    
+    public static void main(String[] args) {
+        
+    }
 }
