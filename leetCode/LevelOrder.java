@@ -7,7 +7,7 @@ import java.util.Queue;
  * @Author: Rooter
  * @Date: 2022-04-08 22:35:40
  * @LastEditors: Rooter
- * @LastEditTime: 2022-04-08 23:07:13
+ * @LastEditTime: 2022-04-11 23:04:08
  */
 /**
  * 给定一个 N 叉树，返回其节点值的层序遍历。（即从左到右，逐层遍历）。
@@ -44,7 +44,7 @@ public class LevelOrder {
         return ans;
     }
     public static void main(String[] args) {
-        
+        Node root = new Node();
     }
 }
 
