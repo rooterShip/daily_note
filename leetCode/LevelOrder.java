@@ -7,7 +7,7 @@ import java.util.Queue;
  * @Author: Rooter
  * @Date: 2022-04-08 22:35:40
  * @LastEditors: Rooter
- * @LastEditTime: 2022-04-12 22:31:37
+ * @LastEditTime: 2022-04-16 21:49:47
  */
 /**
  * 给定一个 N 叉树，返回其节点值的层序遍历。（即从左到右，逐层遍历）。
@@ -30,16 +30,16 @@ public class LevelOrder {
         queue.offer(root);
 
         while(!queue.isEmpty()){
-            int cnt = queue.size(); //表示上一层的节点个数
-            List<Integer> level = new ArrayList<>();
+            int cnt = queue.size(); //上一层的节点数
+            List<Integer> level = new ArrayList<>();//用来存放每一层的节点值
             for(int i = 0; i < cnt; i++){
-                Node cur = queue.poll();
-                level.add(cur.val);
+                Node cur = queue.poll(); //遍历该层的每一个节点
+                level.add(cur.val); //每一层的节点值一个一个存进去
                 for(Node child : cur.children){
-                    queue.offer(child);
+                    queue.offer(child); //对该层的每一个节点的子节点放进队列，表示下一层的节点，进行下一层遍历
                 }
             }
-            ans.add(level);
+            ans.add(level); //level代表每一层的节点，把不同层的放进去就是整个树
         }
         return ans;
     }
