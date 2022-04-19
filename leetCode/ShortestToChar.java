@@ -6,7 +6,7 @@ import java.util.Deque;
  * @Author: Rooter
  * @Date: 2022-04-19 21:21:49
  * @LastEditors: Rooter
- * @LastEditTime: 2022-04-19 21:54:41
+ * @LastEditTime: 2022-04-19 22:00:33
  */
 /**
  * 
@@ -42,6 +42,14 @@ public class ShortestToChar {
             }
         }
         //从起始点出发进行BFS搜索（二维）
+        /**
+         * 一般模板：
+         * 1.将起始点压入队列
+         * 2.弹出队列当前元素
+         * 3.以当前元素为出发点搜索他周围的元素，并压入栈（注意边界问题）
+         * 4.将当前元素标记为其他值，以防止再次被搜索到（适当添加下逻辑，
+         *   本题就是利用距离不断加一更新当前元素的值，最后得到目标数组
+         */
         while(!queue.isEmpty()){
             int cur = queue.poll();
             if(cur-1>=0 && ans[cur-1]==-1){
