@@ -5,7 +5,7 @@ import java.util.Deque;
  * @Author: Rooter
  * @Date: 2022-04-19 22:06:50
  * @LastEditors: Rooter
- * @LastEditTime: 2022-04-19 22:33:02
+ * @LastEditTime: 2022-04-20 22:29:43
  */
 /**
  * 
@@ -22,43 +22,30 @@ import java.util.Deque;
  */
 public class FindCircleNum {
     public static int findCircleNum(int[][] isConnected){
-        int cnt = 0;
-        int row = isConnected.length;
-        int col = isConnected[0].length;
+       int cities = isConnected.length;
+       int cnt = 0;
+       boolean[] visited = new boolean[cities];
+       Deque<Integer> deque = new ArrayDeque<>();
+       for(int i = 0; i < cities; i++){
+           if(!visited[i]){
+               //找到第一个没走过的节点，加入队列中并标记为已走过
+               deque.add(i);
+               visited[i]=true;
 
-        Deque<int[]> deque = new ArrayDeque<>();
-        for(int i = 0; i < row; i++){
-            for(int j = 0; j < col; j++){
-                if(isConnected[i][j]==1){
-                    cnt++;
-                    deque.add(new int[]{i,j});
-                }
-
-                while(!deque.isEmpty()){
-                    int[] cur = deque.poll();
-                    if(cur[0]-1>=0 && isConnected[cur[0]-1][cur[1]]==1){
-                        deque.add(new int[]{cur[0]-1,cur[1]});
-                        isConnected[cur[0]-1][cur[1]]=0;
-                    }
-
-                    if(cur[0]+1<=col-1 && isConnected[cur[0]+1][cur[1]]==1){
-                        deque.add(new int[]{cur[0]+1,cur[1]});
-                        isConnected[cur[0]+1][cur[1]]=0;
-                    }
-
-                    if(cur[1]-1>=0 && isConnected[cur[0]][cur[1]-1]==1){
-                        deque.add(new int[]{cur[0],cur[1]-1});
-                        isConnected[cur[0]][cur[1]-1]=0;
-                    }
-
-                    if(cur[1]+1<=row-1 && isConnected[cur[0]][cur[1]+1]==1){
-                        deque.add(new int[]{cur[0],cur[1]+1});
-                        isConnected[cur[0]][cur[1]+1]=0;
-                    }
-                }
-            }
-        }
-        return cnt;
+               //跑BFS，从当前节点发散找到相邻的节点，如果两节点之间有边(且发散到的节点没有被访问过），将该节点加入队列
+               while(!deque.isEmpty()){
+                   int cur = deque.poll();
+                   for(int j = 0; j < cities; j++){
+                       if(isConnected[cur][j]==1 && visited[j]==false){
+                           deque.add(j);
+                           visited[j]=true;
+                       }
+                   }
+               }
+               cnt++;
+           }
+       }
+       return cnt;
     }
     public static void main(String[] args) {
         int[][] isConnected = {{1,0,0,1},{0,1,1,0},{0,1,1,1},{1,0,1,1}};
