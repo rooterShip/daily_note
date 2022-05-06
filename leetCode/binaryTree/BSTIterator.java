@@ -2,7 +2,7 @@
  * @Author: rooterShip
  * @Date: 2022-05-05 22:55:33
  * @LastEditors: rooterShip
- * @LastEditTime: 2022-05-05 23:02:53
+ * @LastEditTime: 2022-05-06 22:04:03
  */
 /**
  * 173 二叉搜索树迭代器
@@ -39,17 +39,41 @@
  */
 package binaryTree;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
 public class BSTIterator {
-    public BSTIterator(TreeNode root){
 
+    private int i = -1; // 给后续遍历的时候提供起始支点
+    private List<Integer> res = new ArrayList<>();
+    private Stack<TreeNode> stack = new Stack<>();
+
+    // 构造函数，可以在这个函数内实现中序遍历并压入列表里
+    public BSTIterator(TreeNode root) {
+
+        while (root != null || !stack.isEmpty()) {
+            while (root != null) {
+                stack.add(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            res.add(root.val);
+            root = root.right;
+        }
     }
 
-    public int next(){
-        return 1;
+    // 此函数返回下一个值（中序遍历后--二叉搜索树中序遍历即为自小到大的有序数列）
+    public int next() {
+        i++;
+        return res.get(i);
     }
 
-    public boolean hashNext(){
-        return true;
+    // 此函数返回是否还有下一个值
+    public boolean hasNext() {
+        if (i + 1 < res.size())
+            return true;
+        else
+            return false;
     }
-
 }
