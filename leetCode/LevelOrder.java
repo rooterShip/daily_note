@@ -6,10 +6,11 @@
  * 
  * @LastEditors: rooterShip
  * 
- * @LastEditTime: 2022-05-07 09:15:14
+ * @LastEditTime: 2022-05-07 23:11:49
  */
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+// import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
 
@@ -23,7 +24,7 @@ import java.util.Queue;
  * 输出：[[1],[3,2,4],[5,6]]
  *
  * 输入：root =
- [1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]
+ * [1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]
  * 输出：[[1],[2,3,4,5],[6,7,8,9,10],[11,12,13],[14]]
  */
 public class LevelOrder {
@@ -53,9 +54,27 @@ public class LevelOrder {
 
     public static void main(String[] args) {
         // TODO:补充测试用例
+        Node root = new Node(1);
+        Node A = new Node(3);
+        Node B = new Node(2);
+        Node C = new Node(4);
+        Node D = new Node(5);
+        Node E = new Node(6);
+        // FIXME:java.lang.NoSuchFieldError: children
+        List<Node> list1 = new ArrayList<>();
+        list1.add(A);
+        list1.add(B);
+        list1.add(C);
+        List<Node> list2 = new ArrayList<>();
+        list2.add(D);
+        list2.add(E);
+
+        // root.children = new ArrayList<>(Arrays.asList(A, B, C));
+        // A.children = new ArrayList<>(Arrays.asList(D, E));
+        System.out.println(levelOrder(root).toString());
     }
 }
-
+//FIXME:The type Node is already defined
 class Node {
     public int val;
     public List<Node> children;
