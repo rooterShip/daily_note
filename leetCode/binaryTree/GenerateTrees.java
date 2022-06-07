@@ -6,7 +6,7 @@
  * 
  * @LastEditors: rooterShip
  * 
- * @LastEditTime: 2022-05-23 22:29:40
+ * @LastEditTime: 2022-06-07 21:47:00
  */
 /**
  * 95. 不同的二叉搜索树 II
@@ -28,6 +28,18 @@ public class GenerateTrees {
     public static List<TreeNode> generateTrees(int n) {
         List<TreeNode> res = new ArrayList<>();
         return res;
+
+    }
+
+    public static TreeNode helper(int start, int end) {
+        if (start > end)
+            return null;
+
+        int val = (start + end) / 2;// 折中为根节点（构造出的应该是平衡二叉树）
+        TreeNode root = new TreeNode(val);
+        root.left = helper(start, val - 1);
+        root.right = helper(val + 1, end);
+        return root;
     }
 
     public static void main(String[] args) {
