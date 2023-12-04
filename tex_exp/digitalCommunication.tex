@@ -1,0 +1,93 @@
+% 声明文件类型
+\documentclass[12pt,a4paper,oneside]{ctexart}
+
+
+\CTEXsetup[format={\Large\bfseries}]{section}
+
+% 声明所需要用到的宏包
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{graphicx}
+
+\usepackage{titlesec}
+
+% 导言区
+\title{\vspace{-4cm}\textbf{数字通信课程学习报告}}
+\author{徐淳 231607010094}
+
+% 主体框架
+\begin{document}
+\maketitle
+\section{引言}  
+在本次课程学习中，我习得了较为全面的数字通信理论知识，建立起了相关的理论框架。本次课程从介绍相关概念，复习概率论相关知识开始讲起，后面又介绍了随机过程、基带与滤波通带、信号空间等内容，本次报告针对课程伊始章节Stachastic Process（随机过程）作相应学习笔记及报告。
+\section{随机过程的基本概念}
+随机过程是一类随时间作随机变化的过程，它不能用确切的时间函数描述。如果把把随机过程看成对应不同随机试验结果的时间过程的集合，即随机过程是所有样本函数的集合。具体而言即测试结果的每一个记录，即图中的每一个波形，都是一个确定时间函数$X_{i}(t)$，它称为样本函数或随机过程的一次实现。全部样本函数构成的总体就是一个随机过程，记作$\xi(t)$。
+    \subsection{相关概念}
+        \begin{itemize}
+            \item[$\bullet$] 随机事件(简称事件、实现样本、记录)：在随机试验中，可能出现也可能不出现，而在大量重复试验中具有某种规律性的事件
+            \item[$\bullet$] 随机变量：定义在样本空间上的实值函数,是不确定的
+            \item[$\bullet$] 随机过程：无数个随机变量构成的总体
+            \item[$\bullet$] 离散随机变量：随机变量x的取值个数是有限的或可数无穷个
+            \item[$\bullet$] 连续随机变量：随机变量x可能的取值充满某一有限或无限区间  
+        \end{itemize}
+    \subsection{随机过程的分布函数}
+    由$\xi(t)$表示一个随机过程，在任意一个时刻$t_{1}$上$\xi (t_{1})$是一个随机变量，定义随机过程$\xi(t)$的\\
+    一维概率分布函数：
+    $$
+    F_{1} (x_{1};t_{1}) = P\left \{ \xi(t_{1})\le  x_{1} \right \}
+    $$
+    一维概率密度函数：
+    $$
+    f_{1} (x_{1};t_{1}) = \frac{\partial F_{1} (x_{1};t_{1})}{\partial x_{1}}
+    $$
+    或
+    $$F_{1} (x_{1};t_{1}) = \int_{-\infty }^{x}  f_{1} (x_{1};t_{1})dx
+    $$
+    n维概率分布函数：
+    $$
+    F_{n} (x_{1},x_{2}...,x_{n};t_{1},t_{2},...,t_{n}) = P\left \{ \xi(t_{1})\le  x_{1} ,\xi(t_{1})\le  x_{1},...,\xi(t_{1})\le  x_{1}\right \}
+    $$
+    n维概率密度函数：
+    $$
+    f_{n} (x_{1},x_{2}...,x_{n};t_{1},t_{2},...,t_{n}) = \frac{\partial F_{1} (x_{1},x_{2},...,x_{n};t_{1}，t_{2}，...，t_{n})}{\partial x_{1}\partial x_{2}...\partial x_{n}}
+    $$
+    或
+    $$
+    F_{n} (x_{1},x_{2}...,x_{n};t_{1},t_{2},...,t_{n}) = \int\limits_{-\infty }^{x_{1}} \int\limits_{-\infty }^{x_{2}}...\int\limits_{-\infty }^{x_{n}}f_{n}(x_{1},x_{2},...,x_{n};t_{1},t_{2},...t_{n})dx_{1}dx_{2}...dx_{n}
+    $$
+\section{随机过程的数字特征}
+1.均值（数学期望）\\
+\indent 随机过程$\xi(t)$的数学期望：
+    \begin{itemize}
+        \item [$\bullet$] 若$\xi(t)$连续，定义$E[\xi(t)] = \int_{-\infty }^{\infty } xf_{1}(x,t)dx = a(t)$
+        \item [$\bullet$] 若$\xi(t)$离散，定义$E[\xi(t)] =  {\textstyle \sum_{i=1}^{K}}\xi_{i}(t)P(\xi_{i}(t))=a(t)$ 
+    \end{itemize}
+\indent \indent $\xi (t)$的均值$E\left [ \xi(t) \right ] $是时间的确定函数，常记为$a(t)$，他表示随机过程的$n$个样本函数曲线的摆动中心\\
+
+\indent 2.方差\\
+\indent 随机过程$\xi(t)$的方差：
+$$
+D\left[\xi(t)\right] = E\left\{\left[\xi(t)-a(t)\right]^{2}\right\} = E[\xi^{2}(t)] - a^{2}(t) = \sigma^{2}(t)
+$$
+\indent 方差等于均方值与均方平方之差，表示随机过程在时刻$t$相对于均值$a(t)$的偏离程度
+
+\indent 3.相关函数\\
+\indent $\xi(t)$的协方差函数：
+$$
+B[t_{1},t_{2}] = E\left\{[\xi(t_{1}) - a(t1)][\xi(t_{2}) - a(t_{2})]\right\} 
+$$
+$$
+= \int_{-\infty }^{\infty } \int_{-\infty}^{\infty}[x_{1} - a(t)][x_{2} - a(t_{2})]f_{2}(x_{1},x_{2};t_{1},t_{2})dx_{1}dx_{2}
+$$
+\indent 式中：$a(t_{1})$和$a(t_{2})$分别是在$t_{1}$和$t_{2}$时刻得到的$\xi(t)$的均值；$f_{2}(x_{1},x_{2};t_{1},t_{2})$为$\xi(t)$的二维度概率密度函数。
+
+\indent $\xi(t)$的相关函数：
+$$
+R[t_{1},t_{2}] = E[\xi(t_{1})\xi(t_{2})] = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}x_{1}x_{2}f_{2}(x_{1},x_{2};t_{1},t_{2})dx_{1}dx_{2}
+$$
+\indent 式中：$\xi(t_{1})$和$\xi(t_{1})$分别是在$t_{1}$和$t_{2}$时刻观测$\xi(t)$得到的随机变量
+\section{关于平稳随机过程}
+
+
+\end{document}
