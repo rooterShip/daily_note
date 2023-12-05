@@ -251,7 +251,7 @@ $$
 \section{平稳随机过程通过线性系统}
 假设输入过程$\xi_{i}(t)$是平稳的，其均值为$a$，自相关函数为$R_{i}(\tau)$，功率谱密度为$P_{i}(\omega)$。
 \begin{itemize}
-    \item[$\bullet$] 输出过程$\xi{0}(t)$的均值
+    \item[$\bullet$] 输出过程$\xi_{0}(t)$的均值
     $$
         E\left[\xi_{0}(t)\right] = a\int_{-\infty}^{\infty}h(\tau)d\tau = aH(0)
     $$
@@ -260,7 +260,7 @@ $$
         R_{0}(t_{1},t_{1} + \tau) = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}h(\alpha)h(\beta)R_{i}(\tau + \alpha - \beta)d\alpha d\beta
     $$ 
     若线性系统的输入过程是平稳的，那么输出过程也是平稳的。
-    \item[$\bullet$] 输出过程$\xi_{0}$的功率谱
+    \item[$\bullet$] 输出过程$\xi_{0}(t)$的功率谱
     $$
         P_{0}(f) = H^{*}(f)H(f)P_{i}(f) = |H(f)|^{2} = P_{i}(f)  
     $$
