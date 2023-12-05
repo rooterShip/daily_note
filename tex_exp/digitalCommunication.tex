@@ -57,7 +57,7 @@
     F_{n} (x_{1},x_{2}...,x_{n};t_{1},t_{2},...,t_{n}) = \int\limits_{-\infty }^{x_{1}} \int\limits_{-\infty }^{x_{2}}...\int\limits_{-\infty }^{x_{n}}f_{n}(x_{1},x_{2},...,x_{n};t_{1},t_{2},...t_{n})dx_{1}dx_{2}...dx_{n}
     $$
 \section{随机过程的数字特征}
-1.均值（数学期望）\\
+\subsection{均值（数学期望）}
 \indent 随机过程$\xi(t)$的数学期望：
     \begin{itemize}
         \item [$\bullet$] 若$\xi(t)$连续，定义$E[\xi(t)] = \int_{-\infty }^{\infty } xf_{1}(x,t)dx = a(t)$
@@ -65,14 +65,14 @@
     \end{itemize}
 \indent \indent $\xi (t)$的均值$E\left [ \xi(t) \right ] $是时间的确定函数，常记为$a(t)$，他表示随机过程的$n$个样本函数曲线的摆动中心\\
 
-\indent 2.方差\\
+\subsection{方差}
 \indent 随机过程$\xi(t)$的方差：
 $$
 D\left[\xi(t)\right] = E\left\{\left[\xi(t)-a(t)\right]^{2}\right\} = E[\xi^{2}(t)] - a^{2}(t) = \sigma^{2}(t)
 $$
 \indent 方差等于均方值与均方平方之差，表示随机过程在时刻$t$相对于均值$a(t)$的偏离程度
 
-\indent 3.相关函数\\
+\subsection{相关函数}
 \indent $\xi(t)$的协方差函数：
 $$
 B[t_{1},t_{2}] = E\left\{[\xi(t_{1}) - a(t1)][\xi(t_{2}) - a(t_{2})]\right\} 
@@ -86,8 +86,32 @@ $$
 $$
 R[t_{1},t_{2}] = E[\xi(t_{1})\xi(t_{2})] = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}x_{1}x_{2}f_{2}(x_{1},x_{2};t_{1},t_{2})dx_{1}dx_{2}
 $$
-\indent 式中：$\xi(t_{1})$和$\xi(t_{1})$分别是在$t_{1}$和$t_{2}$时刻观测$\xi(t)$得到的随机变量
-\section{关于平稳随机过程}
-
+\indent 式中：$\xi(t_{1})$和$\xi(t_{2})$分别是在$t_{1}$和$t_{2}$时刻观测$\xi(t)$得到的随机变量\\
+\indent 协方差函数和相关函数之间有着如下确定的关系：
+$$
+B[t_{1},t_{2}] = R[t_{1},t{2}] - E[\xi(t_{1})]E[\xi(t_{2})]
+$$
+\indent $\xi(t),\eta(t)$的互协方差函数：
+$$
+B_{\xi\eta}[t_{1},t_{2} = E[\xi(t_{1})\eta(t_{2})]
+$$
+\indent $\xi(t),\eta(t)$的互相关函数：
+$$
+R_{\xi\eta}[t_{1},t_{2}] = E[\xi(t1)\eta(t_{2})]
+$$
+\indent $\xi(t),\eta(t)$的互相关系数：
+$$
+\rho = \frac{E[\xi(t_{1}) - a_{\xi}(t_{1})][\eta(t_{2}) - a_{\eta}(t_{2})]}{\sqrt{E\left\{[\xi(t_{1}) - a_{\xi}(t_{1})]^{2}\right\}}E\left\{[\eta(t_{2}) - a_{\eta}(t_{2})]^{2}\right\}} = \frac{B_{\xi\eta}[t_{1},t_{2}]}{\sigma_{\xi}(t_{1})\sigma_{\eta}(t_{2})}
+$$
+\indent (1) $|\rho|\le 1$\\
+\indent (2) 相关性：若相关系数$\rho = 0$，则$\xi(t),\eta(t)$是线性不相关的。\\
+\indent (3) 独立与相关性：若$\xi(t),\eta(t)$是独立的，则线性不相关，反之亦然。\\
+\indent 结论：一般随机过程的统计特性，原则上都与时刻$t_{1},t_{2}(t_{2} = t_{1} + tau)$有关或者说与时间起点$t_{1}$及时间间隔$\tau$有关。
+\section{平稳随机过程}
+\subsection{定义}
+若一个随机过程$\xi(t)$的统计特性与时间起点无关，即时间平移不影响其任何统计特性，则称该随机过程是在严格意义下的平稳随机过程，简称严平稳随机过程（狭义平稳随机过程）。因此，平稳随机过程$\xi(t)$的任意有限概率密度函数与时间起点有关，也就是说，对于任意的正整数$n$和所有实数，有：
+$$
+f_{n}(x)
+$$
 
 \end{document}
