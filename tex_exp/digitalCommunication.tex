@@ -25,11 +25,11 @@
 随机过程是一类随时间作随机变化的过程，它不能用确切的时间函数描述。如果把把随机过程看成对应不同随机试验结果的时间过程的集合，即随机过程是所有样本函数的集合。具体而言即测试结果的每一个记录，即图中的每一个波形，都是一个确定时间函数$X_{i}(t)$，它称为样本函数或随机过程的一次实现。全部样本函数构成的总体就是一个随机过程，记作$\xi(t)$。
     \subsection{相关概念}
         \begin{itemize}
-            \item[$\bullet$] 随机事件(简称事件、实现样本、记录)：在随机试验中，可能出现也可能不出现，而在大量重复试验中具有某种规律性的事件
-            \item[$\bullet$] 随机变量：定义在样本空间上的实值函数,是不确定的
-            \item[$\bullet$] 随机过程：无数个随机变量构成的总体
-            \item[$\bullet$] 离散随机变量：随机变量x的取值个数是有限的或可数无穷个
-            \item[$\bullet$] 连续随机变量：随机变量x可能的取值充满某一有限或无限区间  
+            \item[$\bullet$] 随机事件(简称事件、实现样本、记录)：在随机试验中，可能出现也可能不出现，而在大量重复试验中具有某种规律性的事件。
+            \item[$\bullet$] 随机变量：定义在样本空间上的实值函数,是不确定的。
+            \item[$\bullet$] 随机过程：无数个随机变量构成的总体。
+            \item[$\bullet$] 离散随机变量：随机变量x的取值个数是有限的或可数无穷个。
+            \item[$\bullet$] 连续随机变量：随机变量x可能的取值充满某一有限或无限区间。
         \end{itemize}
     \subsection{随机过程的分布函数}
     由$\xi(t)$表示一个随机过程，在任意一个时刻$t_{1}$上$\xi (t_{1})$是一个随机变量，定义随机过程$\xi(t)$的\\
@@ -63,15 +63,13 @@
         \item [$\bullet$] 若$\xi(t)$连续，定义$E[\xi(t)] = \int_{-\infty }^{\infty } xf_{1}(x,t)dx = a(t)$
         \item [$\bullet$] 若$\xi(t)$离散，定义$E[\xi(t)] =  {\textstyle \sum_{i=1}^{K}}\xi_{i}(t)P(\xi_{i}(t))=a(t)$ 
     \end{itemize}
-\indent \indent $\xi (t)$的均值$E\left [ \xi(t) \right ] $是时间的确定函数，常记为$a(t)$，他表示随机过程的$n$个样本函数曲线的摆动中心\\
-
+\indent \indent $\xi (t)$的均值$E\left [ \xi(t) \right ] $是时间的确定函数，常记为$a(t)$，他表示随机过程的$n$个样本函数曲线的摆动中心。\\
 \subsection{方差}
 \indent 随机过程$\xi(t)$的方差：
 $$
 D\left[\xi(t)\right] = E\left\{\left[\xi(t)-a(t)\right]^{2}\right\} = E[\xi^{2}(t)] - a^{2}(t) = \sigma^{2}(t)
 $$
-\indent 方差等于均方值与均方平方之差，表示随机过程在时刻$t$相对于均值$a(t)$的偏离程度
-
+\indent 方差等于均方值与均方平方之差，表示随机过程在时刻$t$相对于均值$a(t)$的偏离程度。
 \subsection{相关函数}
 \indent $\xi(t)$的协方差函数：
 $$
@@ -86,7 +84,7 @@ $$
 $$
 R[t_{1},t_{2}] = E[\xi(t_{1})\xi(t_{2})] = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}x_{1}x_{2}f_{2}(x_{1},x_{2};t_{1},t_{2})dx_{1}dx_{2}
 $$
-\indent 式中：$\xi(t_{1})$和$\xi(t_{2})$分别是在$t_{1}$和$t_{2}$时刻观测$\xi(t)$得到的随机变量\\
+\indent 式中：$\xi(t_{1})$和$\xi(t_{2})$分别是在$t_{1}$和$t_{2}$时刻观测$\xi(t)$得到的随机变量。\\
 \indent 协方差函数和相关函数之间有着如下确定的关系：
 $$
 B[t_{1},t_{2}] = R[t_{1},t{2}] - E[\xi(t_{1})]E[\xi(t_{2})]
@@ -106,12 +104,192 @@ $$
 \indent (1) $|\rho|\le 1$\\
 \indent (2) 相关性：若相关系数$\rho = 0$，则$\xi(t),\eta(t)$是线性不相关的。\\
 \indent (3) 独立与相关性：若$\xi(t),\eta(t)$是独立的，则线性不相关，反之亦然。\\
-\indent 结论：一般随机过程的统计特性，原则上都与时刻$t_{1},t_{2}(t_{2} = t_{1} + tau)$有关或者说与时间起点$t_{1}$及时间间隔$\tau$有关。
+\indent 结论：一般随机过程的统计特性，原则上都与时刻$t_{1},t_{2}(t_{2} = t_{1} + \tau)$有关或者说与时间起点$t_{1}$及时间间隔$\tau$有关。
 \section{平稳随机过程}
 \subsection{定义}
 若一个随机过程$\xi(t)$的统计特性与时间起点无关，即时间平移不影响其任何统计特性，则称该随机过程是在严格意义下的平稳随机过程，简称严平稳随机过程（狭义平稳随机过程）。因此，平稳随机过程$\xi(t)$的任意有限概率密度函数与时间起点有关，也就是说，对于任意的正整数$n$和所有实数，有：
 $$
-f_{n}(x)
+f_{n}(x_{1},x_{2},...,x_{n};t_{1},t_{2},...t_{n}) = f_{n}(x_{1},x_{2},...,x_{n};t_{1} + \tau, t_{2} + \tau,...,t_{n} + \tau)
 $$
+他的一维概率密度函数与时间t无关，即
+$$
+    f_{1}(x_{1},t_{1}) = f_{1}(x_{1})
+$$
+而二维分布函数只与时间间隔有关，即
+$$
+    f_{2}(x_{1},x_{2};t_{1},t_{2}) = f_{2}(x_{1},x_{2};\tau)
+$$
+数学特征：
+$$
+    a(t) = a
+$$
+$$
+    \sigma^{2}(t) = \sigma^{2}
+$$
+$$
+    R(t_{1},t_{1} + \tau) = R(\tau)
+$$
+可见，平稳随机过程$\xi(t)$具有简明的数学特征：\\
+1.与均值$t$无关，为常数$a$;\\
+2.自相关函数只与时间间隔$\tau = t_{2} - t_{1}$有关，即$R(t_{1},t_{1} + \tau)$。\\
+同时满足以上两条的过程定义为广义平稳过程（Wide Sense Stationary）。
+\subsection{各态历经性}
+假设$x(t)$的任意一次实现（样本），由于它是时间的确定函数，可以求得它的时间平均值。其时间均值和时间相关函数分别定义为：
+$$
+\left\{\begin{matrix}\overline{a}  =  \overline{x(t)}  = \lim_{T \to \infty}\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}} x(t)dt
+    \\\overline{R(\tau )} = \overline{x(t)x(t+\tau )} = \lim_{T \to \infty }\frac{1}{T}\int_{-\frac{T}{2} }^{\frac{T}{2} }x(t)x(t+\tau )dt     
+    \end{matrix}\right.
+$$
+如果平稳过程使
+$$
+\left\{\begin{matrix}a = \overline{a} 
+    \\R(\tau ) = \overline{R(\tau) } 
+   \end{matrix}\right.
+$$
+成立。也就是说，平稳过程的统计平均值等于它的任一次实现的时间平均值。则称该平稳过程具有各态历经性。具有各态历经性的随机过程一定是平稳过程，反之不成立。
+\subsection{平稳过程的自相关函数}
+设$\xi(t)$为实平稳过程，则它的自相关函数：
+$$
+   R(\tau) = E[\xi(t)\xi(t + \tau)]
+$$
+具有如下主要性质：\\
+（1）$R(0) = R[\xi^{2}(t)]$，表示$\xi(t)$的平均功率。\\
+（2）$R(\tau) = R(-\tau)$，表示$\tau$的偶函数。\\
+（3）$|R(\tau)|\le R(0)$，表示$R(\tau)$的上界。\\
+（4）$R(\infty) = \lim_{\tau \to \infty}R(\tau) = E[\xi(t)]E[\xi(t + \tau)] = E^{2}[\xi(t)] = a^{2}$，表示$\xi(t)$的直流功率.\\
+（5）$R(0) - R(\infty) = \sigma^{2}$，表示平稳过程的交流功率
+\subsection{平稳过程的功率谱密度}
+对于任意的确定功率信号$f(t)$，它的功率谱密度定义为：
+$$
+   p_{f}(f) = \lim_{T \to \infty} \frac{|F_{T}(f)|^{2}}{T}
+$$
+\indent 不妨把$f(t)$看成是平稳过程$\xi(t)$的任一样本，一般而言，不同样本的谱密度不同，因此，过程的功率谱密度应看称是对所有样本的功率谱的统计平均，即：
+$$
+   P_{\xi}(f) = E[P_{f}(f)] = \lim_{T \to \infty}\frac{E[|F_{T}(f)|^{2}]}{T}
+$$
+\indent 根据维纳-辛钦定理：平稳过程的功率谱密度$P_{\xi}(f)$与其自相关函数$R_{\tau}$也是一对傅里叶变换关系，即
+$$
+   P_{s}(\omega) = \lim_{T \to \infty}\frac{E[|F_{T}(\omega)|^{2}]}{T} = \int_{-\infty}^{\infty}R(\tau)e^{-j\omega\tau}d\tau
+$$
+$$
+   R(\tau) = \frac{1}{2\pi}\int_{-\infty}^{\infty}P_{s}(\omega)e^{-j\omega\tau}d\omega
+$$
+$$
+   S = R(0) = \frac{1}{2\pi}\int_{-\infty}^{\infty}P_{s}(\omega)d\omega
+$$
+$$
+   P_{s}(\omega)\Leftrightarrow R(\tau)
+$$
+在此基础上，可以得出以下结论：\\
+（1）对功率谱密度进行积分，可以得到平稳过程的平均功率：
+$$
+   R(0) = \int_{-\infty}^{\infty}P_{\xi}(f)df
+$$
+（2）各态历经过程的任一样本函数的功谱率密度等于过程的功率谱密度。\\
+（3）功谱率密度$P_{\xi}(f)$具有非负性和实偶性。
+\section{高斯随机过程}
+\subsection{定义}
+如果随机过程$\xi(t)$的任意$n$维分布均服从正态分布，则称它为正态过程或高斯过程。其$n$维正态概率密度函数表示如下：
+$$
+   f_{n}(x_{1},x_{2},...x_{n};t_{1},t_{2},...t_{n}) = \frac{1}{(2\pi)^{n/2}\sigma_{1}\sigma_{2}...\sigma_{n}|B|^(1/2)}e^{\left[\frac{-1}{2|B|}  {\textstyle \sum_{j=1}^{n}}  {\textstyle \sum_{k=1}^{n}}|B|_{jk}(\frac{x_{j} - a_{j}}{\sigma _{j}})(\frac{x_{k}-a_{k}}{\sigma_{k} } )\right]}
+$$
+式中：$a_{k} = E\left[\xi(t_{k})\right]$，$\sigma^{2}(k) = E\left[\xi(t_{k}) - a_{k}\right]$;$|B|$为归一化协方差矩阵的行列式，即：
+$$
+   |B| = \begin{vmatrix}
+    1 & b_{12}& \dots   &b_{1n} \\
+    b_{21} &1 & \dots  & b_{2n} \\
+     \vdots &\vdots  &\dots  &\vdots \\
+     b_{n1}&b_{n2}  &\dots  &1
+   \end{vmatrix}  
+$$
+$|B|_{jk}$是行列式$|B|$中元素$b_{jk}$的代数余子式；$b_{jk}$为归一化协方差函数，即：
+$$
+   b_{jk} = \frac{E|\left[\xi(t_{j}) - a_{k}\right]\left[\xi(t_{k} - a_{k})\right]|}{\sigma_{j}\sigma_{k}}
+$$
+\subsection{重要性质}
 
+\noindent（1）高斯分布的$n$维分布只依赖各个随机变量的均值、方差和归一化协方差。\\
+（2）广义平稳的高斯过程也是严平稳的。\\
+（3）如果高斯过程在不同时刻的取值是不相关的，则：
+$$
+   f_{n}(x_{1},x_{2},...,x_{n};t_{1},t_{2},...,t_{n}) = f_{n}(x_{1};t_{1})f_{n}(x_{2};t_{2})...f_{n}(x_{n};t_{n})
+$$
+这表明，如果高斯过程在不同时刻的取值是不相关的，那么他们也是统计独立的。\\
+（4）高斯过程经过线性变换后生成的过程仍是高斯过程。
+\subsection{高斯随机变量}
+高斯过程在任一时刻的取值是一个正态分布的随机变量，也称高斯随机变量，其以为概率密度函数为：
+$$
+   f(x) = \frac{1}{\sqrt{2\pi}\sigma}exp\left[-\frac{(x-a)^{2}}{2\sigma^{2}}\right]
+$$
+特性：
+\begin{itemize}
+    \item[$\bullet$] 对称于$x=a$这条直线，即由$f(a+x) = f(a-x)$。
+    \item[$\bullet$] $\int_{-\infty}^{\infty}f(x)dx = 1$和$\int_{-\infty}^{a}f(x)dx = \int_{a}^{\infty}dx = 1/2$。
+    \item[$\bullet$] 在点$a$处达到极大值。
+    \item[$\bullet$] 若$\sigma$不变，增加$a$，$f(x)$图形左移；减小$a$，$f(x)$图形右移；若$a$不变，增加$\sigma$，$f(x)$图形变低；减小$\sigma$，$f(x)$图形变高。
+\end{itemize}
+把正态分布的概率密度的积分定义为正态分布函数：
+$$
+    F_{x} = \int_{-\infty}^{x}f(x)dx = \frac{1}{\sqrt{2\pi}\sigma}\int_{-\infty}^{x}exp\left[-\frac{(z-a)^{2}}{2\sigma^{2}}\right]dz = \frac{1}{2} + erf(\frac{x-a}{\sqrt{2}a})
+$$
+其中$erf(x)$表示误差函数，定义为：
+$$
+    erf(x) = \frac{2}{\sqrt{\pi}}\int_{0}^{x}e^{-t^{2}}dt
+$$
+$F(x)$也可以用互补误差函数$erf(x)$表示，即
+$$
+    F(x) = 1-0.5*erfc(\frac{x-a}{\sqrt{2}\sigma})
+$$
+其中$erfc$定义为：
+$$
+    erfc(x) = 1 - erf(x) = \frac{2}{\sqrt{\pi}}\int_{x}^{\infty}e^{t^{2}}dt
+$$
+当$x$很大时，互补误差函数可以近似为：
+$$
+    erfc(x) = \frac{1}{x\sqrt{\pi}}e^{-x^{2}}
+$$
+\section{平稳随机过程通过线性系统}
+假设输入过程$\xi_{i}(t)$是平稳的，其均值为$a$，自相关函数为$R_{i}(\tau)$，功率谱密度为$P_{i}(\omega)$。
+\begin{itemize}
+    \item[$\bullet$] 输出过程$\xi{0}(t)$的均值
+    $$
+        E\left[\xi_{0}(t)\right] = a\int_{-\infty}^{\infty}h(\tau)d\tau = aH(0)
+    $$
+    \item[$\bullet$] 输出过程$\xi_{0}(t)$自相关函数
+    $$
+        R_{0}(t_{1},t_{1} + \tau) = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}h(\alpha)h(\beta)R_{i}(\tau + \alpha - \beta)d\alpha d\beta
+    $$ 
+    若线性系统的输入过程是平稳的，那么输出过程也是平稳的。
+    \item[$\bullet$] 输出过程$\xi_{0}$的功率谱
+    $$
+        P_{0}(f) = H^{*}(f)H(f)P_{i}(f) = |H(f)|^{2} = P_{i}(f)  
+    $$
+    输出过程的功率谱密度是输入过程的功谱率密度乘以系统频率响应模值的平方。
+    \item[$\bullet$] 输出过程$\xi_{0}(t)$的概率分布\\
+    高斯过程经线性变换后的过程仍为高斯过程 
+\section{窄带随机过程}
+若随机过程$\xi(t)$的谱密度集中在中心频率$f_{c}$附近相对窄的频带范围$\Delta f$内，且$f_{c}$远离零频率，则称该$\xi(t)$为窄带随机过程。
+窄带随机过程的一个样本的波形如同包络和相位随机缓变的正弦波。可表示为：
+$$
+    \xi(t) = a_{\xi}(t)cos\left[\omega_{c}t + \phi_{\xi} \right]
+$$
+上式可以进行三角函数展开：
+$$
+    \xi(t) = \xi_{c}(t)cos(\omega_{c}t) - \xi_{s}(t)sin(\omega_{c}t)
+$$
+其中：
+$$
+    \xi_{c}(t) = a_{\xi}(t)cos(\phi_{\xi}(t))
+$$
+$$
+    \xi_{s}(t) = a_{\xi}(t)sin(\phi_{\xi}(t))
+$$
+这里的$\xi_{c}(t)$和$\xi_{s}(t)$分别被称为同相分量和正交分量。\\
+假设$\xi(t)$是一个均值为0，方差为$\sigma^{2}_{\xi}$的平稳高斯窄带过程。
+\subsection{$\xi_{c}(t)$和$\xi_{s}(t)$的统计特性}
+$\xi(t)$的数学期望：
+$$
+    E\left[\xi(t)\right] = E\left[\xi_{c}(t)\right]cos(\omega_{c}t) - E\left[\xi_{s}(t)\right]sin(\omega_{c}t)
+$$
+\end{itemize}
 \end{document}
