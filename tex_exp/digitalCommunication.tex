@@ -99,7 +99,7 @@ R_{\xi\eta}[t_{1},t_{2}] = E[\xi(t1)\eta(t_{2})]
 $$
 \indent $\xi(t),\eta(t)$的互相关系数：
 $$
-\rho = \frac{E[\xi(t_{1}) - a_{\xi}(t_{1})][\eta(t_{2}) - a_{\eta}(t_{2})]}{\sqrt{E\left\{[\xi(t_{1}) - a_{\xi}(t_{1})]^{2}\right\}}E\left\{[\eta(t_{2}) - a_{\eta}(t_{2})]^{2}\right\}} = \frac{B_{\xi\eta}[t_{1},t_{2}]}{\sigma_{\xi}(t_{1})\sigma_{\eta}(t_{2})}
+\rho = \frac{E[\xi(t_{1}) - \alpha_{\xi}(t_{1})][\eta(t_{2}) - \alpha_{\eta}(t_{2})]}{\sqrt{E\left\{[\xi(t_{1}) - \alpha_{\xi}(t_{1})]^{2}\right\}}E\left\{[\eta(t_{2}) - \alpha_{\eta}(t_{2})]^{2}\right\}} = \frac{B_{\xi\eta}[t_{1},t_{2}]}{\sigma_{\xi}(t_{1})\sigma_{\eta}(t_{2})}
 $$
 \indent (1) $|\rho|\le 1$\\
 \indent (2) 相关性：若相关系数$\rho = 0$，则$\xi(t),\eta(t)$是线性不相关的。\\
@@ -267,11 +267,12 @@ $$
     输出过程的功率谱密度是输入过程的功谱率密度乘以系统频率响应模值的平方。
     \item[$\bullet$] 输出过程$\xi_{0}(t)$的概率分布\\
     高斯过程经线性变换后的过程仍为高斯过程 
+\end{itemize}
 \section{窄带随机过程}
 若随机过程$\xi(t)$的谱密度集中在中心频率$f_{c}$附近相对窄的频带范围$\Delta f$内，且$f_{c}$远离零频率，则称该$\xi(t)$为窄带随机过程。
 窄带随机过程的一个样本的波形如同包络和相位随机缓变的正弦波。可表示为：
 $$
-    \xi(t) = a_{\xi}(t)cos\left[\omega_{c}t + \phi_{\xi} \right]
+    \xi(t) = \alpha_{\xi}(t)cos\left[\omega_{c}t + \phi_{\xi} \right]
 $$
 上式可以进行三角函数展开：
 $$
@@ -279,10 +280,10 @@ $$
 $$
 其中：
 $$
-    \xi_{c}(t) = a_{\xi}(t)cos(\phi_{\xi}(t))
+    \xi_{c}(t) = \alpha_{\xi}(t)cos(\phi_{\xi}(t))
 $$
 $$
-    \xi_{s}(t) = a_{\xi}(t)sin(\phi_{\xi}(t))
+    \xi_{s}(t) = \alpha_{\xi}(t)sin(\phi_{\xi}(t))
 $$
 这里的$\xi_{c}(t)$和$\xi_{s}(t)$分别被称为同相分量和正交分量。\\
 假设$\xi(t)$是一个均值为0，方差为$\sigma^{2}_{\xi}$的平稳高斯窄带过程。
@@ -326,5 +327,66 @@ $$
 $$
     R_{\xi}(\tau)  = R_{c}(\tau)cos(\omega_{c}\tau) - R_{cs}(\tau)sin(\omega_{c}\tau)
 $$
-\end{itemize}
+同理，若令$t = \frac{\pi}{2\omega_{c}}$，有：
+$$
+    R_{\xi}(\tau) = R_{s}(\tau)cos(\omega_{c}\tau) + R_{sc}(\tau)sin(\omega_{c}\tau)
+$$
+由此可知，若窄带随机过程是平稳的，则其同相分量和正交分量也必然是平稳的。\\
+一些性质：
+$$
+    R_{c}(\tau) = R_{s}(\tau)
+$$
+$$
+    R_{cs}(\tau) = -R_{sc}(\tau)
+$$
+$$
+    R_{cs}(\tau) = R_{sc}(-\tau)
+$$
+$$
+    R_{sc}(\tau) = -R_{sc}(-\tau)
+$$
+$$
+    R_{sc}(0) = R_{cs}(0) = 0
+$$
+$$
+    R_{\xi}(0) = R_{c}(0) = R_{s}(0)
+$$
+$$
+    \sigma^{2}_{\xi} = \sigma^{2}_{c} = \sigma^{2}_{s}
+$$
+\subsection{$ \alpha_{\xi}(t)$和$ \phi_{\xi}(t)$的统计特性}
+由上面的分析可知，$\xi_{c}$，$\xi_{s}$的联合概率密度函数为：
+$$
+    f(\xi_{c},\xi_{s}) = f(\xi_{c})f(\xi_{s}) = \frac{1}{2\pi\sigma^{2}_{\xi}}exp\left[-\frac{\xi^{2}_{c} + \xi^{2}_{s}}{2\sigma^{2}_{\xi}}\right]
+$$
+设$\alpha_{\xi},\phi_{\xi}$的联合概率密度函数为$f(\xi_{c},\xi_{s})$，则有：
+$$
+    f(\alpha_{\xi},\phi_{\xi}) = f(\xi_{c},\xi_{s})|\frac{\partial(\xi_{c},\xi_{s})}{\partial(\alpha_{\xi},\phi_{\xi})}|
+$$
+可以求得：
+$$
+    f(\alpha_{\xi},\phi_{\xi}) = \alpha_{\xi}f(\xi_{c},\xi_{s}) = \frac{\alpha_{\xi}}{2\pi\sigma^{2}_{\xi}}exp\left[-\frac{(\alpha_{\xi}cos(\phi_{\xi}))^{2} + (\alpha_{\xi}sin(\phi_{\xi}))^{2}}{2\sigma_{\xi}}\right]
+$$
+$$
+     = \frac{\alpha_{\xi}}{2\pi\sigma^{2}_{\xi}}exp\left[-\frac{a^{2}_{\xi}}{2\sigma^{2}_{\xi}}\right]
+$$
+分别对$\alpha_{\xi}$，$\phi_{\xi}$求积分求得一维概率密度函数为：
+$$
+    f(\alpha_{xi}) = \frac{\alpha_{\xi}}{a^{2}_{\xi}}exp\left[-\frac{a^{2}_{\xi}}{2\sigma^{2}_{\xi}}\right]
+$$
+$$
+    f(\phi_{\xi}) = \frac{1}{2\pi}
+$$
+可见，$\alpha_{\xi}(t)$服从瑞利分布，$\phi_{\xi}(t)$服从均匀分布。且$\alpha_{\xi}$和$\phi_{\xi}(t)$是统计独立的，即：
+$$
+    f(\alpha_{\xi},\phi_{\xi}) = f(a_{\xi})f(\phi_{\xi})
+$$
+\section{正弦波加窄带高斯噪声}
+在许多调制系统中，传输的信号是用正弦波作为载波的已调信号。并且经过信道传输时会有噪声影响，为了减少噪声的影响，通常在解调器前端设置一个带通滤波器，其输出是正弦波已调信号与窄带高斯噪声的混合波形。\\
+设正弦波加窄带高斯噪声的混合信号为：
+$$
+    r(t) = Acos(\omega_{c}t + \theta ) + n(t)
+$$
+式中：$n(t) = n_{c}(t)cos(\omega\-{c}t) - n_{s}(t)sin(\omega_{c}t))$，为窄带高斯噪声，其均值为0，方差为$\sigma^{2}_{n}$；$\theta$为正弦波的随机相位，在$(0,2\pi)$上均匀分布；振幅$A$和角频率$\omega_{c}$均假定为确知量。
+
 \end{document}
