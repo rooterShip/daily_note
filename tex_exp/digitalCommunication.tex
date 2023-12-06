@@ -291,5 +291,40 @@ $\xi(t)$的数学期望：
 $$
     E\left[\xi(t)\right] = E\left[\xi_{c}(t)\right]cos(\omega_{c}t) - E\left[\xi_{s}(t)\right]sin(\omega_{c}t)
 $$
+因为$\xi(t)$平稳且均值为0，那么对于任意时间$t$，都有$E\left[\xi_{s}(t)\right] = 0$，所以可得：
+$$
+    E\left[\xi_{c}(t)\right] = 0,E\left[\xi_{s}(t)\right] = 0
+$$
+$\xi(t)$的自相关函数：
+$$
+    R_{\xi}(t,t + \tau) = E\left[\xi(t)\xi(t + \tau)\right]
+$$
+$$
+     = R_{c}(t,t + \tau)cos(\omega_{c}t)cos(\omega_{c}(t + \tau))  - R_{cs}(t,t + \tau)cos(\omega_{c}t)sin(\omega_{c}(t + \tau)) - 
+$$
+$$
+    R_{sc}(t,t + \tau)sin(\omega_{c}t)cos(\omega_{c}(t + \tau)) + R_{s}(t + \tau)sin(\omega_{c}t)sin(\omega_{c}(t + \tau))
+$$
+其中：
+$$
+    R_{c}(t,t + \tau) = E\left[\xi_{c}(t)\xi_{c}(t + \tau)\right]
+$$
+$$
+    R_{cs}(t, t + \tau) = E\left[\xi_{c}(t)\xi_{s}(t + \tau)\right]
+$$
+$$
+    R_{sc}(t, t + \tau) = E\left[\xi_{s}(t)\xi_{c}(t + \tau)\right]
+$$
+$$
+    R_{s}(t, t + \tau) = E\left[\xi_{s}(t)\xi_{s}(t + \tau)\right]
+$$
+因为$\xi(t)$是平稳的，故有：
+$$
+    R_{\xi}(t + \tau) = R(\tau)
+$$
+因此，若令$t = 0$，有：
+$$
+    R_{\xi}(\tau)  = R_{c}(\tau)cos(\omega_{c}\tau) - R_{cs}(\tau)sin(\omega_{c}\tau)
+$$
 \end{itemize}
 \end{document}
