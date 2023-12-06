@@ -9,8 +9,8 @@
 \usepackage{hyperref}
 \usepackage{bookmark}
 \usepackage{graphicx}
-
 \usepackage{titlesec}
+\usepackage[bottom=2cm,footskip=1cm]{geometry}
 
 % 导言区
 \title{\vspace{-4cm}\textbf{数字通信课程学习报告}}
@@ -18,7 +18,15 @@
 
 % 主体框架
 \begin{document}
-\maketitle
+\pagestyle{plain}
+\setlength{\topmargin}{-18mm}
+% \setlength{\footskip}{70pt}
+\begin{center}
+    \textbf{\huge{数字通信课程学习报告}}
+\end{center}
+\begin{center}
+    \large{徐淳 231607010094}
+\end{center}
 \section{引言}  
 在本次课程学习中，我习得了较为全面的数字通信理论知识，建立起了相关的理论框架。本次课程从介绍相关概念，复习概率论相关知识开始讲起，后面又介绍了随机过程、基带与滤波通带、信号空间等内容，本次报告针对课程伊始章节Stachastic Process（随机过程）作相应学习笔记及报告。
 \section{随机过程的基本概念}
@@ -387,6 +395,36 @@ $$
 $$
     r(t) = Acos(\omega_{c}t + \theta ) + n(t)
 $$
-式中：$n(t) = n_{c}(t)cos(\omega\-{c}t) - n_{s}(t)sin(\omega_{c}t))$，为窄带高斯噪声，其均值为0，方差为$\sigma^{2}_{n}$；$\theta$为正弦波的随机相位，在$(0,2\pi)$上均匀分布；振幅$A$和角频率$\omega_{c}$均假定为确知量。
-
+式中：$n(t) = n_{c}(t)cos(\omega\-{c}t) - n_{s}(t)sin(\omega_{c}t))$，为窄带高斯噪声，其均值为0，方差为$\sigma^{2}_{n}$；$\theta$为正弦波的随机相位，在$(0,2\pi)$上均匀分布；振幅$A$和角频率$\omega_{c}$均假定为确知量。\\
+于是：
+$$
+    r(t) = \left[Acos(\theta) + n_{c}(t)\right]cos(\omega_{c}t)cos(\omega_{c}(t)) - \left[Asin(\theta) + n_{s}(t)\right]sin(\omega_{c}t)
+$$
+$$
+     = z_{c}(t)cos(\omega_{c}t) - z_{s}(t)sin(\omega_{c}t) = z(t)cos\left[\omega_{c}t + \phi(t)\right]
+$$
+其中:
+$$
+    z_{c}(t) = Acos(\theta) + n_{c}(t)
+$$
+$$
+    z_{s}(t) = Asin(\theta) + n_{s}(t)
+$$
+可以求得包络$z$的联合概率密度函数为：
+$$
+    f(z) = \frac{z}{\sigma^{2}_{n}}exp\left[-\frac{1}{2\sigma^{2}_{n}}(z^{2} + A^{2})\right]I_{O}(\frac{A_{z}}{\sigma^{2}_{n}})
+$$
+这个概率密度函数称为广义瑞利分布，又称莱斯分布\\
+性质：\\
+当信噪比$\frac{A^{2}}{2\sigma^{2}}$很大时，$f(z)$近似为高斯分布。\\
+当$A=0$时，信噪比$\frac{A^{2}}{2\sigma^{2}} = 0$，$f(z)$退化为瑞利分布。
+\section{总结}
+在这篇报告中我主要对随机过程这一章节的知识点进行了梳理与总结以及部分的公式推导，主要介绍了随机过程的基本概念，平稳随机过程，高斯随机过程，窄带随机过程的内容。这使得我对此章节内容有了更深刻更系统的认识。此外，数字通信课程内仍有其他很多的重难点，我也会在此报告之外进行系统的总结。
+\begin{thebibliography}{99}  
+    \bibitem{ref1}Rappaport T S. Wireless Communications--Principles and Practice, (The Book End)[J]. Microwave Journal, 2002, 45(12): 128-129.
+    \bibitem{ref2}Tranter W H, Shanmugan K S, Rappaport T S. 通信系统仿真原理与无线应用[J]. 译. 北京: 机械工业出版社, 2005: 289-416.
+    \bibitem{ref3}Stüber G L, Steuber G L. Principles of mobile communication[M]. Boston: Kluwer academic, 2001.
+    \bibitem{ref4}Ash R B. Information theory[M]. Courier Corporation, 2012.
+    \bibitem{ref5}Simon M K, Alouini M S. Digital communication over fading channels[M]. New York: Wiley, 2001.
+\end{thebibliography}
 \end{document}
